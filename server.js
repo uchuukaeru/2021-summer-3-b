@@ -1,6 +1,6 @@
 import { Server } from "https://js.sabae.cc/Server.js";
 import { jsonfs } from "https://js.sabae.cc/jsonfs.js";
-import { WsServer } from "./ws"
+import { WsServer } from "./ws/wsServer.js"
 const boardfn = "data/board.json";
 
 let board = jsonfs.read(boardfn) || [];
