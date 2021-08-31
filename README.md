@@ -6,22 +6,39 @@
 call:("api/login",{ID,pass})<br>
 return:{name,session}<br>
 <br>
-ログイン用API<br><br>
-ID:ユーザのID<br>
-pass:パスワードをハッシュ化したもの<br>
-name:ユーザ名<br>
-session:ユーザに紐づいたセッション番号<br>
-  
-### /api/register
+ログイン用API<br>
+引数:object<br>
+返り値:object<br><br>
+ID:ユーザのID、整数型<br>
+pass:パスワードをハッシュ化したもの、文字列型<br>
+name:ユーザ名、文字列型<br>
+session:ユーザに紐づいたセッション番号、小数型<br>
 </p>
+
+### /api/register
+<p>
 call:("api/register",{name,pass})<br>
 return:{ID,session}<br>
 <br>
-ユーザ登録用API<br><br>
-pass:パスワードをハッシュ化したもの<br>
-name:ユーザ名<br>
-ID:ユーザのID<br>
-session:ユーザに紐づいたセッション番号<br>
+ユーザ登録用API<br>
+引数:object<br>
+返り値:object<br><br>
+name:ユーザ名、文字列型<br>
+pass:パスワードをハッシュ化したもの、文字列型<br>
+ID:ユーザのID、整数型<br>
+session:ユーザに紐づいたセッション番号、小数型<br>
+</p>
+
+### /api/get_active
+<p>
+call:("api/get_active")<br>
+return:[num, ...]<br>
+<br>
+アクティブユーザ検索用API<br>
+引数:なし<br>
+返り値:整数型配列<br><br>
+num:アクティブユーザのID、整数型<br>
+</p>
 
 ## users.json
 ### ID
