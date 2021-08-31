@@ -2,6 +2,8 @@ import { Server } from "https://js.sabae.cc/Server.js";
 import { jsonfs } from "https://js.sabae.cc/jsonfs.js";
 import {WsServer} from "./ws/wsServer.js";
 
+import {get_active} from "./active_friend.js";
+import {check_session,login_check} from "./check_session.js";
 
 const userfn = "data/users.json"
 let user = jsonfs.read(userfn) || [];
@@ -12,24 +14,17 @@ class MyServer extends Server {
       //ログイン用API
       //call:("api/login",{ID,pass}),return:{name,session}
       console.log("call login");
-      let u=null;
-      console.log("id :",req.ID);
-      for(const d in user){
-        console.log(user[d].ID);
-        if(user[d].ID==req.ID){
-          console.log(d);
-          u=d;
-          break;
-        }
-      }
-      if(!u) return "not found";
-      if(user[u].pass!=req.pass)return null;
+
+      const u=login_check(req);
+      if(!u) return u;
+      if(u=="not found") return u;
+
       const res={name:user[u].name,session:user[u].session};
       //console.log(res);
       user[u].is_active=true;
       jsonfs.write(userfn,user);
       return res;
-    }else if(path=="/api/register"){
+    } else if (path=="/api/register"){
       //ユーザ登録用API
       //call:("api/register",{name,pass}),return:"ok"
       console.log("call register");
@@ -60,34 +55,39 @@ class MyServer extends Server {
         session:ses
       }
       return res;
-    } else if(path=="/api/get_active"){
+    } else if (path=="/api/get_active"){
       //アクティブユーザの検索用API
       //call:("api/get_active"),return:[num, ...]
-      let active_user=[];
-      for(const d of user){
-        if(d.is_active) active_user.push(d.ID);
-      }
-      return active_user;
+      console.log("call get_active");
+      return get_active();
     } else if (path=="/api/logout"){
       //ログアウト用API
       //call:("api/logout",{ID,session}),return:ok
       console.log("call logout");
-      let u=null;
-      console.log("id :",req.ID);
-      for(const d in user){
-        console.log(user[d].ID);
-        if(user[d].ID==req.ID){
-          console.log(d);
-          u=d;
-          break;
-        }
-      }
-      if(!u) return "not found";
-      if(user[u].session != req.session) return "session error";
+
+      const u=check_session(req);
+      if(u=="not found"||u=="session error") return "error"
+
       //console.log(res);
       user[u].is_active=false;
       jsonfs.write(userfn,user);
       return "ok";
+    } else if (path=="/api/get_friend"){
+      //フレンドの情報取得用API
+      //call:("api/get_friend",{ID,session}),return:[{ID,name,is_active,fitness}, ...]
+      console.log("call get_friend");
+
+      const u=check_session(req);
+      if(u=="not found"||u=="session error") return "error"
+
+      const friend=user[u].friend_ID;
+      const active=get_active();
+      //console.log(user[u]);
+      console.log(friend);
+      console.log(active);
+      const active_friend=friend.filter(i=>active.indexOf(i)!=-1);
+      console.log("active friend :",active_friend);
+      return active_friend;
     }
   }
 }
