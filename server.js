@@ -54,7 +54,11 @@ class MyServer extends Server {
       }
       user.push(item);
       jsonfs.write(userfn,user);
-      return "ok";
+      const res={
+        ID:id,
+        session:ses,
+      }
+      return res;
     } else if(path=="api/get_active"){
 
     }
