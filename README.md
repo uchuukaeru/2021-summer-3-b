@@ -5,12 +5,21 @@
 <p>
 call:("api/login",{ID,pass})<br>
 return:{name,session}<br>
-<br>  
+<br>
+ログイン用API<br><br>
 ID:ユーザのID<br>
 pass:パスワードをハッシュ化したもの<br>
 name:ユーザ名<br>
 session:ユーザに紐づいたセッション番号<br>
+  
+### /api/register
 </p>
+call:("api/register",{name,pass})<br>
+return:"ok"<br>
+<br>
+ユーザ登録用API<br><br>
+pass:パスワードをハッシュ化したもの<br>
+name:ユーザ名<br>
 
 
 ## users.json
