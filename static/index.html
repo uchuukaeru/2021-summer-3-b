@@ -1,5 +1,7 @@
 <!-- 接続すると最初に表示されるページ -->
-<script type=/text/javascript src="script/board.js"></script>
+<script type=text/javascript src="script/fetchJSON.js"></script> 
+<script type=text/javascript src="script/board.js"></script>
+
 
 <div id=board></div>
             
@@ -9,13 +11,44 @@
     <button id="write">書き込む</button>
 </div>
 
+<div class=loginbox>
+    ID：<input type=text id=inp_ID><br>
+    password：<input type=text id=inp_pass>
+    <button id="login">login</button>
+</div>
+
 <script type=module>
-    // const item={"type":"board","ID":0}
+    import {hash} from "https://js.sabae.cc/hash.js"
+
     window.onload = async () => {
-        load_board(item);
+        console.log("load");
+        load_board();
     };
     
     write.onclick=async()=>{
-        add_board(item);
+        console.log("add");
+        add_board();
+    };
+    
+    login.onclick=()=>{
+        console.log("click");
     }
+
+    login.onclick=async()=>{
+        const item = {
+            ID: inp_ID.value.trim(),
+            pass: hash(inp_pass.value)
+        };
+        console.log("item :",item);
+        const res=await fetchJSON("api/login",item);
+        console.log("res :",res);
+        if (!res || res=="not found"){
+            alert("ユーザー登録またはログインに失敗しました");
+            return;
+        }
+        alert("ログインに成功しました。");
+        console.log(res)
+    }
+    
+    
 </script>

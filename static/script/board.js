@@ -12,7 +12,7 @@ HTMLで呼び出し使うscriptファイル
 
 */
 
-import { fetchJSON } from "https://js.sabae.cc/fetchJSON.js"; //もしかしたら動かないかも。その場合はurlからデータをコピーして使う
+console.log("import board.js");
 
 const enc = (s) => {
   s = s.replace(/&/g, "&amp;");
@@ -46,11 +46,7 @@ async function load_board() {
   for (const d of data) {
     const div = document.createElement("div");
     div.className = "bbsitem-board";
-    div.innerHTML = `<span class=date>${
-      enc(d.date)
-    }</span><hr><div class="comment-content"><p class=name>name : ${
-      enc(d.name)
-    }</p><p class=comment>comment : ${enc(d.body)}</p><hr size="5"></div>`;
+    div.innerHTML = `<span class=date>${enc(d.date)}</span><hr><div class="comment-content"><p class=name>name : ${enc(d.name)}</p><p class=comment>comment : ${enc(d.body)}</p><hr size="5"></div>`;
     board.appendChild(div);
   }
 }
