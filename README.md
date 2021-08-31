@@ -11,8 +11,6 @@ return:{name,session}<br>
 ## users.json
 ### ID
 ユーザのID、整数型<br>
-### E-mail
-ユーザのメールアドレス、文字列型<br>
 ### name
 ユーザの名前、文字列型<br>
 ### pass
