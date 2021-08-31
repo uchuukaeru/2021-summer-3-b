@@ -1,1 +1,2 @@
-import { login } from './js/'
+import { loginPage } from './login.js'
+import { mainPage } from "./main.js"
