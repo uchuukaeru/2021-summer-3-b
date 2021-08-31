@@ -19,7 +19,7 @@ class MyServer extends Server {
       return board;
     } else if(path=="/api/login"){
         //ログイン用API
-        //call:("api/login",{ID,pass}),return:session
+        //call:("api/login",{ID,pass}),return:{name,session}
         console.log("call login");
         let u=null;
         console.log("id :",req.ID)
