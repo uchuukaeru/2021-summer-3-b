@@ -13,10 +13,11 @@ class MyServer extends Server {
       //call:("api/login",{ID,pass}),return:{name,session}
       console.log("call login");
       let u=null;
-      console.log("id :",req.ID)
+      console.log("id :",req.ID);
       for(const d in user){
         console.log(user[d].ID);
         if(user[d].ID==req.ID){
+          console.log(d);
           u=d;
           break;
         }
@@ -67,6 +68,25 @@ class MyServer extends Server {
         if(d.is_active) active_user.push(d.ID);
       }
       return active_user;
+    } else if (path=="/api/logout"){
+      //ログアウト用API
+      //call:("api/logout",{ID}),return:ok
+      console.log("call logout");
+      let u=null;
+      console.log("id :",req.ID);
+      for(const d in user){
+        console.log(user[d].ID);
+        if(user[d].ID==req.ID){
+          console.log(d);
+          u=d;
+          break;
+        }
+      }
+      if(!u) return "not found";
+      //console.log(res);
+      user[u].is_active=false;
+      jsonfs.write(userfn,user);
+      return "ok";
     }
   }
 }
