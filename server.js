@@ -56,11 +56,15 @@ class MyServer extends Server {
       jsonfs.write(userfn,user);
       const res={
         ID:id,
-        session:ses,
+        session:ses
       }
       return res;
     } else if(path=="api/get_active"){
-
+      let active_user=[];
+      for(const d of user){
+        if(d.is_active) active_user.push(d.ID);
+      }
+      return active_user;
     }
   }
 }
