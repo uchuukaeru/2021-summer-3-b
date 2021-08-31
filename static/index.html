@@ -1,10 +1,32 @@
-<div class=loginbox>
-    ID：<input type=text id=inp_ID><br>
-    password：<input type=text id=inp_pass>
-    <button id="login">login</button>
-</div>
+<!DOCTYPE html>
+<html lang="ja">
 
-<script type=module>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+
+<title>WebSocketTest</title>
+
+<body>
+    <div class="container block">
+        <button onclick="loginpage">chatroom</button>
+        <button onclick="mainpage">chatroom</button>
+        <button onclick="profile">profile</button>
+
+        <div id="login-page"></div>
+        <div id="main-page" class="hidden"></div>
+
+        <div class=loginbox>
+            ID：<input type=text id=inp_ID><br>
+            password：<input type=text id=inp_pass>
+            <button id="login">login</button>
+        </div>
+
+  </div>
+  <script type="module" src="./js/index.js"></script>
+  <script type=module>
     import {hash} from "https://js.sabae.cc/hash.js";
     import {fetchJSON} from "https://js.sabae.cc/fetchJSON.js";
     
@@ -23,6 +45,7 @@
         alert("ログインに成功しました。");
         console.log(res)
     }
-    
-    
-</script>
+  </script>
+</body>
+
+</html>

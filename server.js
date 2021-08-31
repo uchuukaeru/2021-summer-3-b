@@ -1,5 +1,6 @@
 import { Server } from "https://js.sabae.cc/Server.js";
 import { jsonfs } from "https://js.sabae.cc/jsonfs.js";
+import { WsServer } from "./ws/wsServer.js"
 
 const boardfn = "data/board.json";
 const userfn = "data/user.json"
@@ -34,3 +35,4 @@ class MyServer extends Server {
 }
 
 new MyServer(8001);
+WsServer(8002)
