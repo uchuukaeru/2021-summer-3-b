@@ -65,12 +65,13 @@
         })
 
         const outputMessage = ({ data }) => {
-            const { name, msg } = JSON.parse(data)
+            console.log(data)
+            const { name, message } = JSON.parse(data)
 
             const template = `
             <li>
                 <div class="name">${name}</div>
-                <div class="msg">${msg}</div>
+                <div class="msg">${message}</div>
             </li>
             `
 
