@@ -15,12 +15,13 @@ session:ユーザに紐づいたセッション番号<br>
 ### /api/register
 </p>
 call:("api/register",{name,pass})<br>
-return:"ok"<br>
+return:{ID,session}<br>
 <br>
 ユーザ登録用API<br><br>
 pass:パスワードをハッシュ化したもの<br>
 name:ユーザ名<br>
-
+ID:ユーザのID<br>
+session:ユーザに紐づいたセッション番号<br>
 
 ## users.json
 ### ID
