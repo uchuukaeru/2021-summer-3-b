@@ -1,8 +1,6 @@
 import { isWebSocketCloseEvent } from "http://deno.land/std/ws/mod.ts"
 import { v4 } from "https://deno.land/std/uuid/mod.ts"
-import { jsonfs } from "https://js.sabae.cc/jsonfs.js";
-const userfn = "data/user.json";
-let user = jsonfs.read(userfn) || [];
+import { JSONDB } from "https://js.sabae.cc/JSONDB.js";
 
 /** @type Map<string, WebSocket> */
 const clients = new Map()
@@ -14,11 +12,11 @@ const clients = new Map()
 
 
 const sockConnection = async (ws) => {
+  const uid = v4.generate()
 
   for await (const ev of ws) {
     if (isWebSocketCloseEvent(ev)) {
       clients.delete(uid)
-      users=user.find(d=>d.ID==req.ID);
     }
 
     if (typeof ev === "string") {
@@ -29,8 +27,6 @@ const sockConnection = async (ws) => {
             ws.send(JSON.stringify(obj))
           })
           break
-        case "friends":
-          
       }
     }
   }

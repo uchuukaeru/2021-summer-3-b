@@ -1,3 +1,4 @@
+import { fetchJSON } from "https://js.sabae.cc/fetchJSON.js";
 
 const login = async (id, password) => {
   const data = await fetchJSON("/api/login", {
