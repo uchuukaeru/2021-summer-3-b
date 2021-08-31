@@ -40,6 +40,18 @@ return:[num, ...]<br>
 num:アクティブユーザのID、整数型<br>
 </p>
 
+### /api/logout
+<p>
+call:("api/logout",{ID,session})<br>
+return:"ok"<br>
+<br>
+アクティブユーザ検索用API<br>
+引数:object<br>
+返り値:文字列型<br><br>
+ID:ユーザのID、整数型<br>
+session:ユーザに紐づいたセッション番号、小数型<br>
+</p>
+
 ## users.json
 ### ID
 ユーザのID、整数型<br>
