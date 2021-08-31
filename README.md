@@ -5,6 +5,11 @@
 <p>
 call:("api/login",{ID,pass})<br>
 return:{name,session}<br>
+<br>  
+ID:ユーザのID
+pass:パスワードをハッシュ化したもの
+name:ユーザ名
+session:ユーザに紐づいたセッション番号
 </p>
 
 
