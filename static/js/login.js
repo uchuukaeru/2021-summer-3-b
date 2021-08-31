@@ -1,6 +1,8 @@
 import { fetchJSON } from "https://js.sabae.cc/fetchJSON.js";
-import { toggleHidden } from "./"
-
+import { changePage } from "./pages.js"
+import {
+  login,
+} from './services/services.js'
 
 const loginPage = () => {
   const loginPage = document.querySelector("#login-page")
@@ -39,12 +41,9 @@ const loginPage = () => {
     const id = loginForm.id.value
     const password = loginForm.pass.value
 
-    const a = await fetchJSON("/api/login", {
-      ID: id,
-      password,
-    })
+    await login(id, password)
 
-    toggleHidden("main-page")
+    changePage("main-page")
   }
 }
 
