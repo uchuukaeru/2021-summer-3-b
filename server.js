@@ -70,7 +70,7 @@ class MyServer extends Server {
       return active_user;
     } else if (path=="/api/logout"){
       //ログアウト用API
-      //call:("api/logout",{ID}),return:ok
+      //call:("api/logout",{ID,session}),return:ok
       console.log("call logout");
       let u=null;
       console.log("id :",req.ID);
@@ -83,6 +83,7 @@ class MyServer extends Server {
         }
       }
       if(!u) return "not found";
+      if(user[u].session != req.session) return "session error";
       //console.log(res);
       user[u].is_active=false;
       jsonfs.write(userfn,user);
