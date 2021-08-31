@@ -1,20 +1,25 @@
 import { Server } from "https://js.sabae.cc/Server.js";
 import { jsonfs } from "https://js.sabae.cc/jsonfs.js";
 import { WsServer } from "./ws/wsServer.js"
-const boardfn = "data/board.json";
 
-let board = jsonfs.read(boardfn) || [];
+const userfn = "data/users.json";
+
+let user = jsonfs.read(userfn) || [];
 
 class MyServer extends Server {
   async api(path, req) {
-    if (path == "/api/add") {
-      console.log("call badd");
-      board.push(req);
-      jsonfs.write(boardfn, board);
-      return "ok";
-    } else if (path == "/api/list") {
-      console.log("call list");
-      return board;
+    if(path=="/api/login"){
+      //ログイン用API
+      //call:("api/login",{ID,pass}),return:session
+      console.log("call login");
+      const u=user.find(d=>d.ID==req.ID);
+      if(!u) return "not found";
+      if(u.pass!=req.pass)return null;
+      const res={name:u.name,session:u.session};
+      return res;
+    } else if (path=="/api/getfriend"){
+      //
+      //call("api/getfriend",[id, ...]),return:[{id,now_fitness,is_active}]
     }
   }
 }
