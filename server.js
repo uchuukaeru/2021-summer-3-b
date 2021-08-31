@@ -9,15 +9,7 @@ let user = jsonfs.read(userfn) || [];
 
 class MyServer extends Server {
   async api(path, req) {
-    if (path == "/api/add") {
-      console.log("call badd");
-      board.push(req);
-      jsonfs.write(boardfn, board);
-      return "ok";
-    } else if (path == "/api/list") {
-      console.log("call list");
-      return board;
-    } else if(path=="/api/login"){
+    if(path=="/api/login"){
         //ログイン用API
         //call:("api/login",{ID,pass}),return:{name,session}
         console.log("call login");
