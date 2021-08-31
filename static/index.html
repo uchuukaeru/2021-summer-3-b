@@ -1,35 +1,94 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
+
+    <head>
+
+        <title>PanelSelect</title>
+        <link href="css/bulma.css" rel="stylesheet">
+        <!-- css -->
+        <style>
+            .Panel {
+                position: relative;
+                height: 80vh;
+                margin-left: 15px;
+                border: solid 1px gray;
+                border-radius: 0px 20px 4px 20px;
+                box-shadow: 15px 10px #dddddd;
+            }
+
+            #login-page {
+                display: block;
+                background: linear-gradient(180deg, rgba(195, 112, 34, 0.164) 0%, rgba(156, 200, 105, 0.495) 100%);
+            }
+
+            #home-page {
+                display: none;
+                background: linear-gradient(56deg, rgba(225, 238, 255, 0.492) 0%, rgba(122, 67, 250, 0.495) 100%);
+            }
+
+        </style>
 
 
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="./style.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    </head>
 
-<title>WebSocketTest</title>
 
-<body>
-    <div class="container block">
-        <button onclick="loginpage">chatroom</button>
-        <button onclick="mainpage">chatroom</button>
-        <button onclick="profile">profile</button>
-        
-        <form class="name-form">
-            <input type="text" name="nickname" placeholder="nickname" required>
-            <button>submit chat</button>
-        </form>
-        <div class="chatroom-page hidden">
-            <ul class="chat-list">
-            </ul>
-            <form class="chat-form">
-                <input type="text" name="msg" placeholder="msg" required>
-                <button>send</button>
-            </form>
+    <body>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+        <!-- navigation bar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button type="button" onclick="login()">ログイン</button>
+            <button type="button" onclick="showPanel(0)">0</button>
+            <button type="button" onclick="showPanel(1)">1</button>
+        </nav>
+
+        <!-- main contant -->
+        <div class="columns">
+
+            <div class="column is-10" id="main_contant" style="margin:30px">
+                <div class="Panel" id="login-page">
+                    <div class="columns is-5">
+                        <div class="collumn">
+                            <div class="field">
+                                <p class="control has-icons-left has-icons-right">
+                                    <input class="input" type="email" placeholder="Email">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-envelope"></i>
+                                    </span>
+                                    <span class="icon is-small is-right">
+                                        <i class="fas fa-check"></i>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="field">
+                                <p class="control has-icons-left">
+                                    <input class="input" type="password" placeholder="Password">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-lock"></i>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="field">
+                                <p class="control">
+                                    <button class="button is-success">
+                                        Login
+                                    </button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="Panel" id="home-page">
+                    Home
+                </div>
+            </div>
         </div>
-        <div class="home-page hidden"></div>
-    </div>
-    <script type='module' src="./js/socket.js"></script>
-</body>
+        <script src="./js/index.js"></script>
+        <!-- <script type="module">
+            import { login, showPanel } from "./js/index.mjs"
+        </script> -->
+    </body>
 
 </html>
