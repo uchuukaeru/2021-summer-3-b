@@ -1,0 +1,46 @@
+<div>
+
+<div class=loginbox>
+    <h3>ログインフォーム</h3>
+    ID：<input type=text id=inp_ID><br>
+    password：<input type=text id=inp_pass_login>  
+    <button id="login">ログイン</button>
+</div>
+<div class=signin>
+    <h3>登録フォーム</h3>
+    name：<input type=text id=inp_name><br>
+    password：<input type=text id=inp_pass_add> 
+    <button id="signin">登録</button>
+</div>
+
+<script type="module">
+    import {hash} from "https://js.sabae.cc/hash.js";
+    import {fetchJSON} from "https://js.sabae.cc/fetchJSON.js";
+    
+    login.onclick=async()=>{
+        const item = {
+            ID: inp_ID.value.trim(),
+            pass: hash(inp_pass_login.value)
+        };
+        console.log("item :",item);
+        const res=await fetchJSON("api/login",item);
+        console.log("res :",res);
+        if (!res || res=="not found"){
+            alert("ユーザー登録またはログインに失敗しました");
+            return;
+        }
+        alert("ログインに成功しました。");
+        console.log(res)
+    }
+
+    signin.onclick=async()=>{
+        console.log("click");
+        const item = {
+            name: inp_name.value.trim(),
+            pass: hash(inp_pass_add.value)
+        };
+        console.log("item :",item);
+        if(await fetchJSON("api/register",item)=="ok") alert("ログインに成功しました。");
+    };
+
+</script>

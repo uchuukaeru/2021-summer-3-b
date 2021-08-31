@@ -1,6 +1,7 @@
 import { Server } from "https://js.sabae.cc/Server.js";
 import { jsonfs } from "https://js.sabae.cc/jsonfs.js";
-import { WsServer } from "./ws/wsServer.js"
+import {WsServer} from "./ws/wsServer.js";
+
 
 const userfn = "data/users.json"
 let user = jsonfs.read(userfn) || [];
@@ -28,10 +29,37 @@ class MyServer extends Server {
       jsonfs.write(userfn,user);
       return res;
     }else if(path=="/api/register"){
-      
+      //ユーザ登録用API
+      //call:("api/register",{name,pass}),return:"ok"
+      console.log("call register");
+      let ses_array=[];
+      for(const d of user){
+        ses_array.push(d.session);
+      }
+      console.log(ses_array);
+      let ses=0;
+      while(1){
+        ses=Math.random();
+        if(!ses_array.includes(ses)) break;
+      }
+      const id=user.length+1;
+      const item={
+        ID:id,
+        name:req.name,
+        pass:req.pass,
+        session:ses,
+        is_active:true,
+        fitness:[],
+        friend_ID:[]
+      }
+      user.push(item);
+      jsonfs.write(userfn,user);
+      return "ok";
+    } else if(path=="api/get_active"){
+
     }
   }
 }
 
 new MyServer(8001);
-WsServer(8002)
+WsServer(8002);
