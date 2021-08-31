@@ -59,7 +59,9 @@ class MyServer extends Server {
         session:ses
       }
       return res;
-    } else if(path=="api/get_active"){
+    } else if(path=="/api/get_active"){
+      //アクティブユーザの検索用API
+      //call:("api/get_active"),return:[num, ...]
       let active_user=[];
       for(const d of user){
         if(d.is_active) active_user.push(d.ID);
