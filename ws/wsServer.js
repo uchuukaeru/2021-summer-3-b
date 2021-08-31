@@ -4,7 +4,6 @@ import { acceptWebSocket, acceptable } from "https://deno.land/std/ws/mod.ts"
 import { sockConnection } from "./connection.js"
 
 export const WsServer = async (port) => {
-  console.log(`http://localhost:${port}`)
   const server = await serve({ port })
 
   for await (const req of server) {

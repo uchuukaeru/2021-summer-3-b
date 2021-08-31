@@ -1,9 +1,21 @@
 import { isWebSocketCloseEvent } from "http://deno.land/std/ws/mod.ts"
 import { v4 } from "https://deno.land/std/uuid/mod.ts"
-import { JSONDB } from "https://js.sabae.cc/JSONDB.js";
 
-/** @type Map<User, WebSocket> */
+/** @type Map<string, WebSocket> */
 const clients = new Map()
+
+
+const on = (ws, event) => {
+  const obj = JSON.parse(event)
+  if (!obj["event"]) sendError(ws, "please some event")
+  return obj
+};
+
+const broadcast = (wsarr, obj) => {
+  wsarr.forEach((ws) => {
+    ws.send(JSON.stringify(obj))
+  })
+}
 
 const sockConnection = async (ws) => {
   const uid = v4.generate()
@@ -22,18 +34,6 @@ const sockConnection = async (ws) => {
       }
     }
   }
-}
-
-const on = (ws, event) => {
-  const obj = JSON.parse(event)
-  if (!obj["event"]) sendError(ws, "please some event")
-  return obj
-};
-
-const broadcast = (wsarr, obj) => {
-  wsarr.forEach((ws) => {
-    ws.send(JSON.stringify(obj))
-  })
 }
 
 export { sockConnection }
