@@ -20,7 +20,7 @@ class MyServer extends Server {
       if(!u) return u;
       if(u=="not found") return u;
 
-      const res={ID:get_data(u,"ID"),name:get_data(u,"name"),session:get_data(u,"session")};
+      const res=get_data(u,"all");
       //console.log(res);
       if(change_active(u)=="ok") return res;
     } else if (path=="/api/register"){

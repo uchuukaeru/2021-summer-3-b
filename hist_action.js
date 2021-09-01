@@ -12,7 +12,7 @@ function add_hist(item){
     /*
     item={
         d:
-
+        hist:
     }
     */
     console.log("call function add_hist");
@@ -26,7 +26,9 @@ function get_hist(item){
     /*
     item={
         d:
-        
+        firstloc:
+        num:
     }
     */
+   
 }
