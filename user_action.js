@@ -18,15 +18,21 @@ function change_active(d){
 
 function add_friend(item){
     console.log("call function add_friend");
-    /*
-    item={
-        d:
-        friend_ID:
-    }
-    */
     user[item.d].friend_ID.push(friend_ID);
     jsonfs.write(userfn,user);
     return "ok";
+}
+
+function check_user(){
+
+}
+
+function check_friend(){
+
+}
+
+function check_friend(){
+
 }
 
 export {get_data,change_active,add_friend};

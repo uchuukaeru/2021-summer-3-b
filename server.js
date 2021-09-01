@@ -14,6 +14,7 @@ class MyServer extends Server {
     if(path=="/api/login"){
       //ログイン用API
       //call:("api/login",{ID,pass}),return:{name,session}
+      //
       console.log("call login");
 
       const u=login_check(req);
@@ -26,6 +27,7 @@ class MyServer extends Server {
     } else if (path=="/api/register"){
       //ユーザ登録用API
       //call:("api/register",{name,pass}),return:"ok"
+      //
       console.log("call register");
       let ses_array=[];
       for(const d of user){
@@ -48,11 +50,8 @@ class MyServer extends Server {
       }
       user.push(item);
       jsonfs.write(userfn,user);
-      const res={
-        ID:id,
-        session:ses
-      }
-      return res;
+      
+      return id;
     } else if (path=="/api/get_active_ID"){
       //アクティブユーザのID検索用API
       //call:("api/get_active_ID"),return:[num, ...]
