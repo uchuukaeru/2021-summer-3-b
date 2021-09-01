@@ -39,15 +39,17 @@ call:("api/get_active_ID")<br>
 return:[num, ...]<br>
 <br>
 
-アクティブユーザのID検索用API<br>
+アクティブユーザの ID 検索用 API<br>
 引数:なし<br>
 返り値:整数型配列<br><br>
-num:アクティブユーザのID、整数型<br>
+num:アクティブユーザの ID、整数型<br>
+
 </p>
 
 ### /api/logout
 
 ### /api/get_active
+
 <p>
 call:("api/get_active")<br>
 return:[{ID,name,is_active,fitness}, ...]
@@ -62,19 +64,22 @@ fitness:運動の種類、文字列型配列<br>
 </p>
 
 ### /api/logout
+
 <p>
 call:("api/logout",{ID,session})<br>
 return:"ok"<br>
 <br>
 
-ログアウト用API<br>
+ログアウト用 API<br>
 引数:object<br>
 返り値:文字列型<br><br>
-ID:ユーザのID、整数型<br>
+ID:ユーザの ID、整数型<br>
 session:ユーザに紐づいたセッション番号、小数型<br>
+
 </p>
 
 ### /api/active_friend_ID
+
 <p>
 call:("api/active_friend_ID",{ID,session})<br>
 return:[num, ...]<br>
@@ -86,6 +91,7 @@ num:アクティブフレンドのID、整数型<br>
 </p>
 
 ### /api/active_friend
+
 <p>
 call:("api/active_friend",{ID,session})<br>
 return:[{ID,name,is_active,fitness}, ...]
@@ -100,6 +106,7 @@ fitness:運動の種類、文字列型配列<br>
 </p>
 
 ### /api/friend_data
+
 <p>
 call:("api/friend_data",{ID,session})<br>
 return:"ok"
@@ -114,6 +121,7 @@ fitness:運動の種類、文字列型配列<br>
 </p>
 
 ### /api/add_friend
+
 <p>
 call:("api/add_friend",{ID,session,friend_ID})<br>
 return:"ok"
@@ -126,8 +134,8 @@ session:ユーザに紐づいたセッション番号、小数型<br>
 friend_ID:追加するフレンドID<br>
 </p>
 
-
 ## users.json
+
 <p>
 {<br>
   ID:int型<br>
@@ -163,10 +171,13 @@ friend_ID:追加するフレンドID<br>
 ### fitness
 
 運動の種類、文字列型配列<br>
+
 ### friend_ID
-フレンド登録しているユーザのID、整数型配列<br>
+
+フレンド登録しているユーザの ID、整数型配列<br>
 
 ## users_hist.json
+
 <p>
 {<br>
   ID:int型<br>
@@ -181,12 +192,21 @@ friend_ID:追加するフレンドID<br>
 </p>
 
 ### ID
-ユーザのID、整数型<br>
+
+ユーザの ID、整数型<br>
+
 ### hist
-ユーザの履歴、object配列<br>
+
+ユーザの履歴、object 配列<br>
+
 ### date
+
 日時、文字列型
+
 ### fitness
+
 行った運動、文字列型
+
 ### tag
+
 運動の開始、終了のタグ、文字列型

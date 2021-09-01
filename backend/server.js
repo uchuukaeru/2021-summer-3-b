@@ -47,8 +47,8 @@ class MyServer extends Server {
         name: req.name,
         pass: req.pass,
         session: ses,
-        is_active: true,
-        fitness: [],
+        is_active: false,
+        fitness: "",
         friend_ID: [],
       };
       user.push(item);
