@@ -43,13 +43,14 @@ num:アクティブユーザのID、整数型<br>
 ### /api/get_active
 <p>
 call:("api/get_active")<br>
-return:[{ID,name,fitness}]
+return:[{ID,name,is_active,fitness}, ...]
 <br>
 アクティブユーザのデータ検索用API<br>
 引数:なし<br>
 返り値:object<br>
 ID:アクティブユーザのID、整数型<br>
 name:アクティブユーザの名前、文字列型<br>
+is_active:対象のアクティブ状態(常にtrue),bool型<br>
 fitness:運動の種類、文字型配列<br>
 </p>
   
@@ -79,16 +80,30 @@ num:アクティブフレンドのID、整数型<br>
 ### /api/active_friend
 <p>
 call:("api/active_friend",{ID,session})<br>
-return:[{ID,name,fitness}]
+return:[{ID,name,is_active,fitness}, ...]
 <br>
-アクティブユーザのデータ検索用API<br>
+アクティブフレンドのデータ検索用API<br>
 引数:object<br>
 返り値:object<br>
 ID:アクティブフレンドのID、整数型<br>
 name:アクティブフレンドの名前、文字列型<br>
+is_active:対象のアクティブ状態(常にtrue),bool型<br>
 fitness:運動の種類、文字型配列<br>
 </p>
 
+### /api/friend_data
+<p>
+call:("api/friend_data",{ID,session})<br>
+return:[{ID,name,is_active,fitness}, ...]
+<br>
+フレンドユーザのデータ検索用API<br>
+引数:object<br>
+返り値:object<br>
+ID:フレンドのID、整数型<br>
+name:フレンドの名前、文字列型<br>
+is_active:対象のアクティブ状態,bool型<br>
+fitness:運動の種類、文字型配列<br>
+</p>
 
 ## users.json
 ### ID
