@@ -6,7 +6,7 @@
 
         <form @submit.prevent="submitForm">
           <div class="field">
-            <label>Username</label>
+            <label>ユーザーID</label>
             <div class="control">
               <input type="text" class="input" v-model="user_id" />
             </div>
@@ -55,17 +55,34 @@ export default {
   },
   methods: {
     async submitForm() {
+      this.$store.commit("setIsLoading", true);
       const formData = {
         ID: this.user_id,
         pass: sha256(this.password),
       };
-      console.log(formData.pass);
+      localStorage.removeItem("settion");
+      console.log("formData :", formData);
       // console.log(this.encryptPassword(formData.pass));
 
       await axios
         .post("/api/login", formData)
         .then((response) => {
-          console.log("res:", response);
+          console.log("response :", response);
+          if (response.data == "not found") {
+          } else if (response.data) {
+            console.log(response.data);
+            const session = response.data.session;
+            this.$store.commit("setSession", session);
+            localStorage.setItem("session", session);
+
+            this.$store.commit("setUser", response.data);
+
+            // user =
+            // console.log("user:", this.user);
+
+            this.$router.push("/active-users");
+          } else {
+          }
         })
         .catch((error) => {
           if (error.response) {
@@ -78,6 +95,7 @@ export default {
             console.log(JSON.stringify(error));
           }
         });
+      this.$store.commit("setIsLoading", false);
     },
   },
 };

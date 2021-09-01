@@ -32,10 +32,10 @@ ID:ユーザのID、整数型<br>
 session:ユーザに紐づいたセッション番号、小数型<br>
 </p>
 
-### /api/get_active
+### /api/get_active_ID
 
 <p>
-call:("api/get_active")<br>
+call:("api/get_active_ID")<br>
 return:[num, ...]<br>
 <br>
 アクティブユーザ検索用API<br>

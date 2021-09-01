@@ -1,23 +1,21 @@
 <template>
   <div class="home">
-    <section class="hero is-medium is-dark md-6">
+    <section class="hero is-medium is-info md-6">
       <div class="hero-body has-text-centered">
-        <p class="title mb-6">
-          SyskenBlogへようこそ！
-        </p>
+        <p class="title mb-6">みんスポ！</p>
         <p class="subtitle">
-          ここは、プログラミングの知識を後輩に伝えていく場所です。
+          みんなでスポーツしましょう！
         </p>
       </div>
     </section>
     <div class="columns is-multiline">
       <div class="column is-12">
-        <h2 class="is-size-2 has-text-centered">最新の記事</h2>
+        <h2 class="is-size-2 has-text-centered">アクティブなユーザー</h2>
       </div>
-      <ArticleBox
-        v-for="article in latestArticles"
-        v-bind:key="article.id"
-        v-bind:article="article"
+      <UserBox
+        v-for="user in activeUsers"
+        v-bind:key="user.ID"
+        v-bind:user="user"
       />
     </div>
   </div>
@@ -27,46 +25,52 @@
 import axios from "axios";
 // @ is an alias to /src
 
-import ArticleBox from "@/components/ArticleBox";
+import UserBox from "@/components/UserBox";
 export default {
   name: "Home",
   data() {
     return {
-      latestArticles: [],
+      activeUsers: [],
       user: {
-        username: "",
-        id: null,
-        emaild: "",
+        ID: null,
+        name: "",
+        session: null,
+        is_active: false,
+        fitness: "",
+        friend_ID: [],
       },
     };
   },
   components: {
-    ArticleBox,
+    UserBox,
   },
   mounted() {
     this.user = this.$store.state.user;
-    this.getLatestArticles();
-    document.title = "Home | SyskenBlog";
+    this.GetActiveUsers();
+    document.title = "ActiveUsers | MinSpo!!";
+    console.log(this.user);
   },
   methods: {
-    async getLatestArticles() {
+    async GetActiveUsers() {
       this.$store.commit("setIsLoading", true);
 
       await axios
-        .get("api/v1/articles/latest")
+        .get("api/get_active")
         .then((response) => {
-          this.latestArticles = response.data;
+          console.log(response.data);
+          this.activeUsers = response.data;
+          console.log("activeuser:", this.activeUsers);
         })
         .catch((error) => {
           console.log(error);
-          toast({
-            message: "Something went wrong. Please try again.",
-            type: "is-danger",
-            dismissible: true,
-            pauseOnHover: true,
-            duration: 2000,
-            position: "bottom-right",
-          });
+          // toast({
+          //   message: "Something went wrong. Please try again.",
+          //   type: "is-danger",
+          //   dismissible: true,
+          //   pauseOnHover: true,
+          //   duration: 2000,
+          //   position: "bottom-right",
+          // });
         });
       this.$store.commit("setIsLoading", false);
     },

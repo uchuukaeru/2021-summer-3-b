@@ -1,6 +1,10 @@
 import { Server } from "https://js.sabae.cc/Server.js";
 import { jsonfs } from "https://js.sabae.cc/jsonfs.js";
-// import * as bcrypt from "https://deno.land/x/crypt@v0.1.0/bcrypt.ts";
+// import { WsServer } from "./ws/wsServer.js";
+
+import { active_friend, get_active, get_ID_user } from "./active_friend.js";
+import { check_session, login_check } from "./check_session.js";
+import { get_data, change_active, add_friend } from "./user_action.js";
 
 const userfn = "data/users.json";
 let user = jsonfs.read(userfn) || [];
@@ -11,24 +15,18 @@ class MyServer extends Server {
       //ログイン用API
       //call:("api/login",{ID,pass}),return:{name,session}
       console.log("call login");
-      let u = null;
-      console.log("id :", req.ID);
-      for (const d in user) {
-        console.log("cycle");
-        console.log(user[d].ID);
-        if (user[d].ID == req.ID) {
-          u = d;
-          break;
-        }
-      }
-      if (!u) return "not found";
-      // const result = bcrypt.compareSync(user[u].pass, req.pass);
-      if (user[u].pass != req.pass) return null;
-      const res = { name: user[u].name, session: user[u].session };
+
+      const u = login_check(req);
+      if (!u) return u;
+      if (u == "not found") return u;
+
+      const res = {
+        ID: get_data(u, "ID"),
+        name: get_data(u, "name"),
+        session: get_data(u, "session"),
+      };
       //console.log(res);
-      user[u].is_active = true;
-      jsonfs.write(userfn, user);
-      return res;
+      if (change_active(u) == "ok") return res;
     } else if (path == "/api/register") {
       //ユーザ登録用API
       //call:("api/register",{name,pass}),return:"ok"
@@ -60,9 +58,80 @@ class MyServer extends Server {
         session: ses,
       };
       return res;
-    } else if (path == "api/get_active") {
+    } else if (path == "/api/get_active_ID") {
+      //アクティブユーザのID検索用API
+      //call:("api/get_active_ID"),return:[num, ...]
+      //user.jsonなし
+      console.log("call get_active_ID");
+      return get_active();
+    } else if (path == "/api/get_active") {
+      //アクティブユーザのデータ検索用API
+      //call;("api/get_active"),return:[{ID,name,fitness}]
+      //user.jsonなし
+      console.log("call get_active");
+      const d = get_active();
+      return get_ID_user(d);
+    } else if (path == "/api/logout") {
+      //ログアウト用API
+      //call:("api/logout",{ID,session}),return:ok
+      console.log("call logout");
+
+      const u = check_session(req);
+      if (u == "not found" || u == "session error") return "error";
+
+      //console.log(res);
+      return change_active(u);
+    } else if (path == "/api/active_friend_ID") {
+      //アクティブフレンドのID取得用API
+      //call:("api/get_friend",{ID,session}),return:[num, ...]
+      //user.jsonなし
+      console.log("call get_friend_ID");
+
+      const u = check_session(req);
+      if (u == "not found" || u == "session error") return "error";
+
+      return active_friend(u);
+    } else if (path == "/api/active_friend") {
+      //アクティブフレンドのデータ取得用API
+      //call:("api/get_friend",{ID,session}),return:[{ID,name,fitness}, ...]
+      //user.jsonなし
+      console.log("call get_friend");
+
+      const u = check_session(req);
+      if (u == "not found" || u == "session error") return "error";
+
+      const d = active_friend(u);
+      //return active_friend;
+      return get_ID_user(d);
+    } else if (path == "/api/friend_data") {
+      //
+      //call:("api/friend_data",{ID,sesion})
+      //
+      console.log("call friend_data");
+      console.log("req :", req);
+      const u = check_session(req);
+      console.log("u:".u);
+      if (u == "not found" || u == "session error") return "error";
+
+      const ids = get_data(u, "friend_ID");
+
+      return get_ID_user(ids);
+    } else if (path == "/api/add_friend") {
+      //
+      //call:("api/add_friend",{ID,session,friend_ID}),return:"ok"
+      //
+      console.log("call add_friend");
+      const u = check_session(req);
+      if (u == "not found" || u == "session error") return "error";
+      const item = {
+        d: u,
+        friend_ID: req.friend_ID,
+      };
+
+      if (add_friend(item) == "ok") return "ok";
     }
   }
 }
 
 new MyServer(8001);
+// WsServer(8002);

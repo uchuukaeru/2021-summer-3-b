@@ -62,6 +62,7 @@ export default {
   },
   methods: {
     async submitForm() {
+      this.$store.commit("setIsLoading", true);
       this.errors = [];
 
       if (this.username === "") {
@@ -112,6 +113,8 @@ export default {
             }
           });
       }
+
+      this.$store.commit("setIsLoading", false);
     },
   },
 };
