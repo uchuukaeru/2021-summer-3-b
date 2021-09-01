@@ -94,7 +94,7 @@ fitness:運動の種類、文字型配列<br>
 ### /api/friend_data
 <p>
 call:("api/friend_data",{ID,session})<br>
-return:[{ID,name,is_active,fitness}, ...]
+return:"ok"
 <br>
 フレンドユーザのデータ検索用API<br>
 引数:object<br>
@@ -104,6 +104,20 @@ name:フレンドの名前、文字列型<br>
 is_active:対象のアクティブ状態,bool型<br>
 fitness:運動の種類、文字型配列<br>
 </p>
+
+### /api/add_friend
+<p>
+call:("api/add_friend",{ID,session,friend_ID})<br>
+return:"ok"
+<br>
+フレンドユーザの追加用API<br>
+引数:object<br>
+返り値:文字列<br><br>
+ID:ユーザのID、整数型<br>
+session:ユーザに紐づいたセッション番号、小数型<br>
+friend_ID:追加するフレンドID<br>
+</p>
+
 
 ## users.json
 ### ID
