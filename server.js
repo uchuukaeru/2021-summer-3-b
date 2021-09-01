@@ -4,7 +4,7 @@ import {WsServer} from "./ws/wsServer.js";
 
 import {active_friend, get_active, get_ID_user} from "./active_friend.js";
 import {check_session,login_check} from "./check_session.js";
-import {get_data,change_active} from "./user_action.js"
+import {get_data,change_active, add_friend} from "./user_action.js"
 
 const userfn = "data/users.json"
 let user = jsonfs.read(userfn) || [];
@@ -22,8 +22,7 @@ class MyServer extends Server {
 
       const res={name:get_data(u,"name").name,session:get_data(u,"session")};
       //console.log(res);
-      change_active(u)
-      return res;
+      if(change_active(u)=="ok") return res;
     } else if (path=="/api/register"){
       //ユーザ登録用API
       //call:("api/register",{name,pass}),return:"ok"
@@ -77,8 +76,7 @@ class MyServer extends Server {
       if(u=="not found"||u=="session error") return "error"
 
       //console.log(res);
-      change_active(u);
-      return "ok";
+      return change_active(u);
     } else if (path=="/api/active_friend_ID"){
       //アクティブフレンドのID取得用API
       //call:("api/get_friend",{ID,session}),return:[num, ...]
@@ -102,12 +100,29 @@ class MyServer extends Server {
       //return active_friend;
       return get_ID_user(d);
     } else if (path=="/api/friend_data"){
+      //
+      //call:("api/friend_data",{ID,sesion})
+      //
+      console.log("call friend_data");
       const u=check_session(req);
       if(u=="not found"||u=="session error") return "error"
 
       const ids=get_data(d,"friend_ID");
 
       return get_ID_user(ids);
+    } else if (path=="/api/add_friend"){
+      //
+      //call:("api/add_friend",{ID,session,friend_ID}),return:"ok"
+      //
+      console.log("call add_friend");
+      const u=check_session(req);
+      if(u=="not found"||u=="session error") return "error"
+      const item={
+        d:u,
+        friend_ID:req.friend_ID
+      }
+
+      if(add_friend(item)=="ok") return "ok";
     }
   }
 }
