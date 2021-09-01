@@ -51,7 +51,7 @@ return:[{ID,name,is_active,fitness}, ...]
 ID:アクティブユーザのID、整数型<br>
 name:アクティブユーザの名前、文字列型<br>
 is_active:対象のアクティブ状態(常にtrue),bool型<br>
-fitness:運動の種類、文字型配列<br>
+fitness:運動の種類、文字列型配列<br>
 </p>
   
 ### /api/logout
@@ -88,7 +88,7 @@ return:[{ID,name,is_active,fitness}, ...]
 ID:アクティブフレンドのID、整数型<br>
 name:アクティブフレンドの名前、文字列型<br>
 is_active:対象のアクティブ状態(常にtrue),bool型<br>
-fitness:運動の種類、文字型配列<br>
+fitness:運動の種類、文字列型配列<br>
 </p>
 
 ### /api/friend_data
@@ -102,7 +102,7 @@ return:"ok"
 ID:フレンドのID、整数型<br>
 name:フレンドの名前、文字列型<br>
 is_active:対象のアクティブ状態,bool型<br>
-fitness:運動の種類、文字型配列<br>
+fitness:運動の種類、文字列型配列<br>
 </p>
 
 ### /api/add_friend
@@ -120,6 +120,17 @@ friend_ID:追加するフレンドID<br>
 
 
 ## users.json
+<p>
+{<br>
+  ID:int型<br>
+  name:String型<br>
+  pass:String型<br>
+  session:float型<br>
+  is_active:bool型<br>
+  fitness:String型配列<br>
+  friend_ID:int型配列<br>
+}<br>
+</p>
 ### ID
 ユーザのID、整数型<br>
 ### name
@@ -131,6 +142,30 @@ friend_ID:追加するフレンドID<br>
 ### is_active
 ユーザの状態、bool型<br>
 ### fitness
-運動の種類、文字型配列<br>
+運動の種類、文字列型配列<br>
 ### friend_ID
 フレンド登録しているユーザのID、整数型配列<br>
+
+## users_hist.json
+<p>
+{<br>
+  ID:int型<br>
+  hist:[<br>
+    {<br>
+      date:String型<br>
+      fitness:String型<br>
+      time:String型<br>
+    }<br>
+  ]<br>
+}<br>
+</p>
+### ID
+ユーザのID、整数型<br>
+### hist
+ユーザの履歴、object配列<br>
+### date
+日時、文字列型
+### fitness
+行った運動、文字列型
+### time
+運動時間、文字列型?(現在未定)
