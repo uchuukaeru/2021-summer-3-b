@@ -131,6 +131,7 @@ friend_ID:追加するフレンドID<br>
   friend_ID:int型配列<br>
 }<br>
 </p>
+
 ### ID
 ユーザのID、整数型<br>
 ### name
