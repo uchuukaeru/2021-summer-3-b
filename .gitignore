@@ -21,3 +21,9 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+/data/board.json
+/data/user.json
+/data/users.json
+/data/users_hist.json
+/static/testindex.html
