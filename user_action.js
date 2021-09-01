@@ -5,7 +5,8 @@ let user = jsonfs.read(userfn) || [];
 
 function get_data(d,item){
     console.log("call function get_data");
-    return user[d][item];
+    if(item!="all") return user[d][item];
+    return user[d];
 }
 
 function change_active(d){

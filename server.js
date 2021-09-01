@@ -115,8 +115,10 @@ class MyServer extends Server {
       //call:("api/add_friend",{ID,session,friend_ID}),return:"ok"
       //
       console.log("call add_friend");
+
       const u=check_session(req);
-      if(u=="not found"||u=="session error") return "error"
+      if(u=="not found"||u=="session error") return "error";
+
       const item={
         d:u,
         friend_ID:req.friend_ID
