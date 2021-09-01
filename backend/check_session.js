@@ -1,44 +1,35 @@
 import { jsonfs } from "https://js.sabae.cc/jsonfs.js";
 
-const userfn = "data/users.json";
+const userfn = "data/users.json"
 let user = jsonfs.read(userfn) || [];
 
-function check_session(item) {
-  console.log("call function check_session");
-  let u = null;
+function check_session(item){
+    console.log("call function check_session")
 
-  console.log("id :", item.ID);
-  for (const d in user) {
-    console.log("userlist:", user[d].ID);
-    if (user[d].ID == item.ID) {
-      console.log("d:", d);
-      u = d;
-      break;
-    }
-  }
-  if (!u) return "not found";
-  console.log("item:", item.session);
-  console.log("u:", u);
-  console.log("user[u]:", user[u]);
-  if (user[u].session != item.session) return "session error";
-  return u;
+    const checked = user.find((a) => {
+        return String(a.ID) == String(item.ID) && String(a.session) == String(item.session)
+    })
+    
+    if (!checked) return "session error";
+
+    return user.indexOf(checked);
 }
 
-function login_check(item) {
-  let u = null;
-  console.log("id :", item.ID);
-  for (const d in user) {
-    console.log(user[d].ID);
-    if (user[d].ID == item.ID) {
-      console.log(d);
-      u = d;
-      break;
+function login_check(item){
+    let u=null;
+    console.log("id :",item.ID);
+    for(const d in user){
+        console.log(user[d].ID);
+        if(user[d].ID==item.ID){
+            console.log(d);
+            u=d;
+            break;
+        }
     }
-  }
-  if (!u) return "not found";
-  if (user[u].pass != item.pass) return null;
+    if(!u) return "not found";
+    if(user[u].pass!=item.pass)return null;
 
-  return u;
+    return u;
 }
 
-export { check_session, login_check };
+export {check_session,login_check};
