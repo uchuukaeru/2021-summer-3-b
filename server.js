@@ -2,7 +2,7 @@ import { Server } from "https://js.sabae.cc/Server.js";
 import { jsonfs } from "https://js.sabae.cc/jsonfs.js";
 import {WsServer} from "./ws/wsServer.js";
 
-import {get_active} from "./active_friend.js";
+import {active_friend, get_active, get_ID_user} from "./active_friend.js";
 import {check_session,login_check} from "./check_session.js";
 
 const userfn = "data/users.json"
@@ -55,11 +55,19 @@ class MyServer extends Server {
         session:ses
       }
       return res;
-    } else if (path=="/api/get_active"){
-      //アクティブユーザの検索用API
-      //call:("api/get_active"),return:[num, ...]
-      console.log("call get_active");
+    } else if (path=="/api/get_active_ID"){
+      //アクティブユーザのID検索用API
+      //call:("api/get_active_ID"),return:[num, ...]
+      //user.jsonなし
+      console.log("call get_active_ID");
       return get_active();
+    } else if (path=="/api/get_active"){
+      //アクティブユーザのデータ検索用API
+      //call;("api/get_active"),return:[{ID,name,fitness}]
+      //user.jsonなし
+      console.log("call get_active");
+      const d=get_active();
+      return get_ID_user(d);
     } else if (path=="/api/logout"){
       //ログアウト用API
       //call:("api/logout",{ID,session}),return:ok
@@ -72,22 +80,28 @@ class MyServer extends Server {
       user[u].is_active=false;
       jsonfs.write(userfn,user);
       return "ok";
-    } else if (path=="/api/get_friend"){
-      //フレンドの情報取得用API
+    } else if (path=="/api/active_friend_ID"){
+      //アクティブフレンドのID取得用API
+      //call:("api/get_friend",{ID,session}),return:[num, ...]
+      //user.jsonなし
+      console.log("call get_friend_ID");
+
+      const u=check_session(req);
+      if(u=="not found"||u=="session error") return "error"
+
+      return active_friend(u);
+    } else if (path=="/api/active_friend"){
+      //アクティブフレンドのデータ取得用API
       //call:("api/get_friend",{ID,session}),return:[{ID,name,is_active,fitness}, ...]
+      //user.jsonなし
       console.log("call get_friend");
 
       const u=check_session(req);
       if(u=="not found"||u=="session error") return "error"
 
-      const friend=user[u].friend_ID;
-      const active=get_active();
-      //console.log(user[u]);
-      console.log(friend);
-      console.log(active);
-      const active_friend=friend.filter(i=>active.indexOf(i)!=-1);
-      console.log("active friend :",active_friend);
-      return active_friend;
+      const d=active_friend(u);
+      //return active_friend;
+      return get_ID_user(d);
     }
   }
 }
