@@ -12,7 +12,7 @@ function check_session(item){
     
     if (!checked) return "session error";
 
-    return checked;
+    return user.indexOf(checked);
 }
 
 function login_check(item){
