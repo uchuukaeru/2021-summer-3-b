@@ -8,9 +8,7 @@
         <!-- <li><a>Music</a></li>
         <li><a>Videos</a></li> -->
         <li class="" v-bind:class="{ 'is-active': showMyFriend }">
-          <a @click="getMyfriends" class="has-text-info">
-            フレンド
-          </a>
+          <a @click="getMyfriends" class="has-text-info"> フレンド </a>
         </li>
         <li class="" v-bind:class="{ 'is-active': showMyHistory }">
           <a @click="getMyHistory" class="has-text-info">
@@ -55,9 +53,7 @@
         v-bind:user="user"
       />
     </div>
-    <div class="columns is-multiline" v-if="showMyHistory">
-      HISTORY
-    </div>
+    <div class="columns is-multiline" v-if="showMyHistory">HISTORY</div>
 
     <div class="modal" v-bind:class="{ 'is-active': showModal }">
       <div @click="showModalEdit" class="modal-background"></div>
@@ -179,6 +175,7 @@ export default {
         .post("/api/add_friend", formData)
         .then((response) => {
           console.log(response.data);
+          this.getMyfriends();
         })
         .catch((error) => {
           if (error.response) {
