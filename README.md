@@ -34,12 +34,26 @@ session:ユーザに紐づいたセッション番号、小数型<br>
 call:("api/get_active_ID")<br>
 return:[num, ...]<br>
 <br>
-アクティブユーザ検索用API<br>
+アクティブユーザのID検索用API<br>
 引数:なし<br>
 返り値:整数型配列<br><br>
 num:アクティブユーザのID、整数型<br>
 </p>
 
+### /api/get_active
+<p>
+call:("api/get_active")<br>
+return:[{ID,name,is_active,fitness}, ...]
+<br>
+アクティブユーザのデータ検索用API<br>
+引数:なし<br>
+返り値:object<br><br>
+ID:アクティブユーザのID、整数型<br>
+name:アクティブユーザの名前、文字列型<br>
+is_active:対象のアクティブ状態(常にtrue),bool型<br>
+fitness:運動の種類、文字型配列<br>
+</p>
+  
 ### /api/logout
 <p>
 call:("api/logout",{ID,session})<br>
@@ -50,6 +64,45 @@ return:"ok"<br>
 返り値:文字列型<br><br>
 ID:ユーザのID、整数型<br>
 session:ユーザに紐づいたセッション番号、小数型<br>
+</p>
+
+### /api/active_friend_ID
+<p>
+call:("api/active_friend_ID",{ID,session})<br>
+return:[num, ...]<br>
+<br>
+アクティブフレンドのID検索用API<br>
+引数:object<br>
+返り値:整数型配列<br><br>
+num:アクティブフレンドのID、整数型<br>
+</p>
+
+### /api/active_friend
+<p>
+call:("api/active_friend",{ID,session})<br>
+return:[{ID,name,is_active,fitness}, ...]
+<br>
+アクティブフレンドのデータ検索用API<br>
+引数:object<br>
+返り値:object<br><br>
+ID:アクティブフレンドのID、整数型<br>
+name:アクティブフレンドの名前、文字列型<br>
+is_active:対象のアクティブ状態(常にtrue),bool型<br>
+fitness:運動の種類、文字型配列<br>
+</p>
+
+### /api/friend_data
+<p>
+call:("api/friend_data",{ID,session})<br>
+return:[{ID,name,is_active,fitness}, ...]
+<br>
+フレンドユーザのデータ検索用API<br>
+引数:object<br>
+返り値:object<br><br>
+ID:フレンドのID、整数型<br>
+name:フレンドの名前、文字列型<br>
+is_active:対象のアクティブ状態,bool型<br>
+fitness:運動の種類、文字型配列<br>
 </p>
 
 ## users.json
