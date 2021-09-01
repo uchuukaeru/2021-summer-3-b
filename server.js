@@ -1,6 +1,7 @@
 import { Server } from "https://js.sabae.cc/Server.js";
 import { jsonfs } from "https://js.sabae.cc/jsonfs.js";
-import {WsServer} from "./ws/wsServer.js";
+import { successResponse, errorResponse } from "./common/response.js";
+//import {WsServer} from "./ws/wsServer.js";
 
 import {active_friend, get_active, get_ID_user} from "./active_friend.js";
 import {check_session,login_check} from "./check_session.js";
@@ -53,7 +54,7 @@ class MyServer extends Server {
         ID:id,
         session:ses
       }
-      return res;
+      return successResponse(res);
     } else if (path=="/api/get_active_ID"){
       //アクティブユーザのID検索用API
       //call:("api/get_active_ID"),return:[num, ...]
@@ -130,4 +131,4 @@ class MyServer extends Server {
 }
 
 new MyServer(8001);
-WsServer(8002);
+//WsServer(8002);
