@@ -40,6 +40,7 @@
 <script>
 import axios from "axios";
 import sha256 from "sha256";
+import { toast } from "bulma-toast";
 
 export default {
   name: "LogIn",
@@ -69,6 +70,15 @@ export default {
         .then((response) => {
           console.log("response :", response);
           if (response.data == "not found") {
+            toast({
+              message:
+                "ユーザーが存在しません。ユーザー名(ID)を確認してください。",
+              type: "is-danger",
+              dismissible: true,
+              pauseOnHover: true,
+              duration: 2000,
+              position: "bottom-right",
+            });
           } else if (response.data) {
             console.log(response.data);
             const session = response.data.session;
@@ -80,8 +90,16 @@ export default {
             // user =
             // console.log("user:", this.user);
 
-            this.$router.push("/active-users");
+            this.$router.push("/my-account");
           } else {
+            toast({
+              message: "パスワードが間違っています。",
+              type: "is-danger",
+              dismissible: true,
+              pauseOnHover: true,
+              duration: 2000,
+              position: "bottom-right",
+            });
           }
         })
         .catch((error) => {

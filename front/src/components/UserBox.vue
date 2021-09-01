@@ -5,10 +5,11 @@
         {{ user.name }}
       </p>
       <p v-if="user.fitness" class="is-size-6 lineClamp subtitle">
+        <span class="icon v-md-custom-icon-fire"></span>
         {{ user.fitness }}
       </p>
       <p v-else class="is-size-6 lineClamp subtitle">
-        オンライン
+        <span class="icon v-md-custom-icon-leaf"></span>
       </p>
       <!-- v-bind:to="`/user/${user.id}/`" -->
     </div>

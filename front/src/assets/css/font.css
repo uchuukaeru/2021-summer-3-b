@@ -1,0 +1,40 @@
+@font-face {
+  font-family: "v-md-iconfont";
+  src: url("../font/iconfont.eot");
+  src: url("../font/iconfont.eot#iefix") format("embedded-opentype"),
+    url("../font/iconfont.ttf") format("truetype"),
+    url("../font/iconfont.woff") format("woff"),
+    url("../font/iconfont.svg#iconfont") format("svg");
+}
+
+[class*="v-md-custom-icon-"] {
+  font-size: 16px;
+  font-family: "v-md-iconfont" !important;
+  font-style: normal !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.v-md-custom-icon-home3::before {
+  content: "\e902";
+}
+.v-md-custom-icon-quill::before {
+  content: "\e907";
+}
+.v-md-custom-icon-color::before {
+  content: "\e90b";
+}
+.v-md-custom-icon-search::before {
+  content: "\e986";
+}
+.v-md-custom-icon-cogs::before {
+  content: "\e995";
+}
+.v-md-custom-icon-leaf::before {
+  content: "\e9a4";
+}
+.v-md-custom-icon-fire::before {
+  content: "\e9a9";
+}
+.v-md-custom-icon-earth::before {
+  content: "\e9ca";
+}

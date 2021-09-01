@@ -2,7 +2,8 @@
   <div class="wrapper">
     <nav class="navbar is-link">
       <div class="navbar-brand">
-        <router-link to="/" class="navbar-item"
+        <router-link to="/" class="navbar-item">
+          <span class="icon"> <i class="icon v-md-custom-icon-home3"></i> </span
           ><strong>みんスポ！</strong></router-link
         >
 
@@ -65,7 +66,7 @@
               </template>
 
               <router-link to="/active-users" class="button is-warning">
-                <span class="icon v-md-custom-icon-quill"></span>
+                <span class="icon v-md-custom-icon-earth"></span>
                 <span>世界のアクティブ</span>
               </router-link>
             </div>

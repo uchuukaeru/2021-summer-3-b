@@ -4,20 +4,7 @@ import router from "./router";
 import store from "./store";
 import axios from "axios";
 
-// import VueSocketIO from "vue-3-socket.io";
-// import SocketIO from "socket.io-client";
-
-const options = { path: "/ws/" }; //Options object to pass into SocketIO
-
-// const VueSocketIO_client = new VueSocketIO({
-//   debug: true,
-//   connection: SocketIO("http://localhost:3000", options), //options object is Optional
-//   vuex: {
-//     store,
-//     actionPrefix: "SOCKET_",
-//     mutationPrefix: "SOCKET_",
-//   },
-// });
+import "@/assets/css/font.css";
 
 axios.defaults.baseURL = "http://localhost:8001";
 

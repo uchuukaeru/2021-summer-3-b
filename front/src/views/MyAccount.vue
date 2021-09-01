@@ -28,6 +28,27 @@
       </ul>
     </div>
     <div class="columns is-multiline" v-if="showMyFriend">
+      <div class="column is-12">
+        <div class="field has-addons">
+          <div class="control">
+            <input
+              type="text"
+              class="input"
+              placeholder="ユーザーID"
+              name="query"
+              v-model="add_friend_ID"
+            />
+          </div>
+
+          <div class="control">
+            <button class="button is-warning" v-on:click="addFriend">
+              <span class="icon">
+                <i class="icon v-md-custom-icon-quill"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
       <UserBox
         v-for="user in Myfriends"
         v-bind:key="user.ID"
@@ -89,6 +110,8 @@ export default {
 
       showMyFriend: true,
       showMyHistory: false,
+
+      add_friend_ID: null,
     };
   },
   mounted() {
@@ -141,6 +164,34 @@ export default {
     async getMyHistory() {
       this.showMyFriend = false;
       this.showMyHistory = true;
+    },
+    async addFriend() {
+      this.$store.commit("setIsLoading", true);
+      const formData = {
+        ID: this.user.ID,
+        session: this.user.session,
+        friend_ID: this.add_friend_ID,
+      };
+      console.log("formData :", formData);
+      // console.log(this.encryptPassword(formData.pass));
+
+      await axios
+        .post("/api/add_friend", formData)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          if (error.response) {
+            for (const property in error.response.data) {
+              this.errors.push(`${property}: ${error.response.data[property]}`);
+            }
+          } else {
+            this.errors.push("Something went wrong. Please try again");
+
+            console.log(JSON.stringify(error));
+          }
+        });
+      this.$store.commit("setIsLoading", false);
     },
     currentDateTime() {
       const current = new Date();
