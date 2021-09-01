@@ -30,5 +30,17 @@ function get_hist(item){
         num:
     }
     */
-   
+
+}
+
+function fitness_start(item){
+    console.log("call function fitness_start");
+}
+
+function fitness_finish(item){
+    console.log("call function fitness_finish");
+}
+
+function now_fitness(item){
+    console.log("call function now_fitness");
 }

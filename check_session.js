@@ -4,6 +4,7 @@ const userfn = "data/users.json"
 let user = jsonfs.read(userfn) || [];
 
 function check_session(item){
+    //セッションをチェックして、そのセッションを持つユーザの番地を返す
     console.log("call function check_session")
     let u=null;
 
@@ -22,6 +23,7 @@ function check_session(item){
 }
 
 function login_check(item){
+    //ユーザIDでusers.jsonを検索し、パスワードが同じで有れば、番地を返す
     let u=null;
     console.log("id :",item.ID);
     for(const d in user){

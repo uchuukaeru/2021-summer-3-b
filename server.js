@@ -43,8 +43,7 @@ class MyServer extends Server {
         name:req.name,
         pass:req.pass,
         session:ses,
-        is_active:true,
-        fitness:[],
+        is_active:false,
         friend_ID:[]
       }
       user.push(item);
@@ -111,9 +110,6 @@ class MyServer extends Server {
 
       return get_ID_user(ids);
     } else if (path=="/api/add_friend"){
-      //
-      //call:("api/add_friend",{ID,session,friend_ID}),return:"ok"
-      //
       console.log("call add_friend");
 
       const u=check_session(req);

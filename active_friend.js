@@ -4,6 +4,7 @@ const userfn = "data/users.json"
 let user = jsonfs.read(userfn) || [];
 
 function get_active(){
+    //すべてのアクティブユーザのIDを返す
     console.log("call function get_active");
     let active_user=[];
       for(const d of user){
@@ -13,6 +14,7 @@ function get_active(){
 }
 
 function get_ID_user(list){
+    //IDをもとにusers.jsonにあるユーザの情報を取得する
     console.log("call function get_ID_user");
     let data=[];
     for(const d of user){
@@ -31,6 +33,7 @@ function get_ID_user(list){
 }
 
 function active_friend(loc){
+    //フレンドリストとアクティブユーザリストを比較してアクティブフレンドのリストを返す
     console.log("call function active_friend");
     const friend=user[loc].friend_ID;
     const active=get_active();
