@@ -179,6 +179,7 @@ export default {
         .post("/api/add_friend", formData)
         .then((response) => {
           console.log(response.data);
+          this.getMyfriends();
         })
         .catch((error) => {
           if (error.response) {

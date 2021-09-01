@@ -23,7 +23,7 @@ function add_friend(item) {
         friend_ID:
     }
     */
-  user[item.d].friend_ID.push(friend_ID);
+  user[item.d].friend_ID.push(Number(item.friend_ID));
   jsonfs.write(userfn, user);
   return "ok";
 }

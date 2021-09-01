@@ -127,8 +127,12 @@ class MyServer extends Server {
         d: u,
         friend_ID: req.friend_ID,
       };
-
-      if (add_friend(item) == "ok") return "ok";
+      console.log(item);
+      if (add_friend(item) == "ok") {
+        return "ok";
+      } else {
+        return null;
+      }
     }
   }
 }
