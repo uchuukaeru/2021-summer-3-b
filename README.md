@@ -59,7 +59,7 @@ fitness:運動の種類、文字列型配列<br>
 call:("api/logout",{ID,session})<br>
 return:"ok"<br>
 <br>
-アクティブユーザ検索用API<br>
+ログアウト用API<br>
 引数:object<br>
 返り値:文字列型<br><br>
 ID:ユーザのID、整数型<br>
@@ -159,6 +159,7 @@ friend_ID:追加するフレンドID<br>
   ]<br>
 }<br>
 </p>
+
 ### ID
 ユーザのID、整数型<br>
 ### hist
