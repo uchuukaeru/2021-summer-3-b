@@ -33,7 +33,7 @@ function add_friend(item){
 
     const newUser = user.map((data) => {
         if (isMyId(data)) {
-            if (data["friend_ID"].some(() => String(friend_ID))) {
+            if (data["friend_ID"].some((e) => String(friend_ID) == String(e))) {
                 message = "error"
             } else {
                 data["friend_ID"].push(friend_ID)
