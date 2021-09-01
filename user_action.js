@@ -24,9 +24,27 @@ function add_friend(item){
         friend_ID:
     }
     */
-    user[item.d].friend_ID.push(friend_ID);
-    jsonfs.write(userfn,user);
-    return "ok";
+    
+    const friend_ID = item.friend_ID
+    let message = ""
+
+    // ID, session, friendid
+    const isMyId = (data) => String(data["ID"]) === String(item.d["ID"])
+
+    const newUser = user.map((data) => {
+        if (isMyId(data)) {
+            if (data["friend_ID"].some(() => String(friend_ID))) {
+                message = "error"
+            } else {
+                data["friend_ID"].push(friend_ID)
+            }
+        }
+        return data
+    })
+    if (message !== "error")  message = "ok";
+
+    jsonfs.write(userfn, newUser);
+    return message
 }
 
 export {get_data,change_active,add_friend};
