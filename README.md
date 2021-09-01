@@ -47,7 +47,7 @@ return:[{ID,name,is_active,fitness}, ...]
 <br>
 アクティブユーザのデータ検索用API<br>
 引数:なし<br>
-返り値:object<br>
+返り値:object<br><br>
 ID:アクティブユーザのID、整数型<br>
 name:アクティブユーザの名前、文字列型<br>
 is_active:対象のアクティブ状態(常にtrue),bool型<br>
@@ -84,7 +84,7 @@ return:[{ID,name,is_active,fitness}, ...]
 <br>
 アクティブフレンドのデータ検索用API<br>
 引数:object<br>
-返り値:object<br>
+返り値:object<br><br>
 ID:アクティブフレンドのID、整数型<br>
 name:アクティブフレンドの名前、文字列型<br>
 is_active:対象のアクティブ状態(常にtrue),bool型<br>
@@ -98,7 +98,7 @@ return:[{ID,name,is_active,fitness}, ...]
 <br>
 フレンドユーザのデータ検索用API<br>
 引数:object<br>
-返り値:object<br>
+返り値:object<br><br>
 ID:フレンドのID、整数型<br>
 name:フレンドの名前、文字列型<br>
 is_active:対象のアクティブ状態,bool型<br>
