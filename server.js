@@ -1,5 +1,5 @@
 import { jsonfs } from "https://js.sabae.cc/jsonfs.js";
-import { VueUgokuServer } from "./VueUgokuServer.js";
+import { VueUgokuServer } from "./backend/VueUgokuServer.js";
 
 import { active_friend, get_active, get_ID_user } from "./backend/active_friend.js";
 import { check_session, login_check } from "./backend/check_session.js";
@@ -135,4 +135,4 @@ class MyServer extends VueUgokuServer {
   }
 }
 
-new MyServer(8001, "./backend/static");
+new MyServer(8891, "./backend/static");

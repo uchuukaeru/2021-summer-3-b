@@ -4,7 +4,7 @@
     "name": "もっく",
     "pass": "566a95423e143400c87b50ce4bbc66543af50452e07614feae77e4b8563dbdb6",
     "session": 0.48435738947308793,
-    "is_active": false,
+    "is_active": true,
     "fitness": "運動",
     "friend_ID": [
       2,
@@ -12,7 +12,9 @@
       7,
       4,
       11,
-      33
+      33,
+      23,
+      1313
     ]
   },
   {

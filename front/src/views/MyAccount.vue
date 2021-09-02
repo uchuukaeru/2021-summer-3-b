@@ -194,7 +194,7 @@ export default {
           } else {
             if (response.data.message == "not found") {
               toast({
-                message: "入力したIDのユーザーが存在しません。",
+                message: "ユーザーが存在しません",
                 type: "is-danger",
                 dismissible: true,
                 pauseOnHover: true,
@@ -203,7 +203,7 @@ export default {
               });
             } else if (response.data.message == "can not add yourself") {
               toast({
-                message: "入力したIDはあなたのIDです。",
+                message: "あなたのIDです",
                 type: "is-danger",
                 dismissible: true,
                 pauseOnHover: true,
@@ -212,7 +212,7 @@ export default {
               });
             } else if (response.data.message == "already added") {
               toast({
-                message: "入力したIDのユーザーを既に登録しています",
+                message: "既に登録しています",
                 type: "is-danger",
                 dismissible: true,
                 pauseOnHover: true,
