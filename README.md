@@ -7,10 +7,14 @@
 ### /api/login
 <p>
 call:("api/login",{ID,pass})<br>
-return:{name,session}<br>
+return:{ID,name,pass,session,is_active,friend_ID,now_fitness}<br>
 <br>
 ログイン用API<br>
 引数:object<br>
+<br>
+error一覧<br>
+>null　パスワードエラー<br>
+>not found　リクエストされたユーザが存在しない<br>
 </p>
 
 ### /api/register
@@ -20,6 +24,9 @@ return:{ID,session}<br>
 <br>
 ユーザ登録用API<br>
 引数:object<br>
+<br>
+error一覧<br>
+>なし<br>
 </p>
 
 ### /api/get_active_ID
@@ -29,15 +36,21 @@ return:[num, ...]<br>
 <br>
 アクティブユーザのID検索用API<br>
 引数:なし<br>
+<br>
+error一覧<br>
+>なし<br>
 </p>
 
 ### /api/get_active
 <p>
 call:("api/get_active")<br>
-return:[{ID,name,is_active,fitness}, ...]
+return:[{ID,name,is_active,now_fitness}, ...]<br>
 <br>
 アクティブユーザのデータ検索用API<br>
 引数:なし<br>
+<br>
+error一覧<br>
+>なし<br>
 </p>
   
 ### /api/logout
@@ -47,6 +60,10 @@ return:"ok"<br>
 <br>
 ログアウト用API<br>
 引数:object<br>
+<br>
+error一覧<br>
+>session error　セッションが間違っている<br>
+>not found　リクエストされたユーザが存在しない<br>
 </p>
 
 ### /api/active_friend_ID
@@ -56,15 +73,23 @@ return:[num, ...]<br>
 <br>
 アクティブフレンドのID検索用API<br>
 引数:object<br>
+<br>
+error一覧<br>
+>session error　セッションが間違っている<br>
+>not found　リクエストされたユーザが存在しない<br>
 </p>
 
 ### /api/active_friend
 <p>
 call:("api/active_friend",{ID,session})<br>
-return:[{ID,name,is_active,fitness}, ...]
+return:[{ID,name,is_active,now_fitness}, ...]
 <br>
 アクティブフレンドのデータ検索用API<br>
 引数:object<br>
+<br>
+error一覧<br>
+>session error　セッションが間違っている<br>
+>not found　リクエストされたユーザが存在しない<br>
 </p>
 
 ### /api/friend_data
@@ -74,6 +99,10 @@ return:"ok"
 <br>
 フレンドユーザのデータ検索用API<br>
 引数:object<br>
+<br>
+error一覧<br>
+>session error　セッションが間違っている<br>
+>not found　リクエストされたユーザが存在しない<br>
 </p>
 
 ### /api/add_friend
@@ -83,8 +112,39 @@ return:"ok"
 <br>
 フレンドユーザの追加用API<br>
 引数:object<br>
+<br>
+error一覧<br>
+>session error　セッションが間違っている<br>
+>not found　リクエストされたユーザが存在しない<br>
+>user not found　検索したユーザが存在しない<br>
+>can not add yourself　自分自身をフレンドに追加しようとしている<br>
+>already added　すでに追加済み<br>
 </p>
 
+### /api/get_data
+<p>
+call:("api/get_data",{ID,session})<br>
+return:{ID,name,pass,session,is_active,friend_ID,now_fitness}<br>
+<br>
+データ再取得用API<br>
+引数:object<br>
+<br>
+error一覧<br>
+>session error　セッションが間違っている<br>
+>not found　リクエストされたユーザが存在しない<br>
+</p>
+
+### /api/get_user
+<p>
+call:("api/get_user",{search})<br>
+return:[{ID,name,is_active,now_fitness}, ...]<br>
+<br>
+ユーザ検索用API<br>
+引数:object<br>
+<br>
+error一覧<br>
+>request user is not found　検索でリクエストされたユーザが存在しない<br>
+</p>
 
 ## users.json
 <p>
