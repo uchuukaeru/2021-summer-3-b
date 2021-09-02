@@ -1,5 +1,4 @@
 import { Server } from "https://js.sabae.cc/Server.js";
-import { jsonfs } from "https://js.sabae.cc/jsonfs.js";
 //import {WsServer} from "./ws/wsServer.js";
 
 import {active_friend, get_active, get_ID_user} from "./active_friend.js";
