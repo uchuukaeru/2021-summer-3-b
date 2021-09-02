@@ -97,7 +97,7 @@ class MyServer extends Server {
       const index=check_session(req);
       if(index=="not found"||index=="session error") return errorResponce(index);
 
-      friend_ID=req.friend_ID
+      const friend_ID=req.friend_ID
       const d=add_friend(index,friend_ID);
       if(d!="ok") return errorResponce(d);
       return successResponce(null);
