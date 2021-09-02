@@ -4,12 +4,13 @@ import { Server } from "https://js.sabae.cc/Server.js";
 import {active_friend, get_active, get_ID_user} from "./active_friend.js";
 import {check_session,login_check} from "./check_session.js";
 import {get_data,change_active, add_friend} from "./user_action.js";
-import {successRespoce,errorResponce} from "./criateResponce.js";
+import {successResponce,errorResponce} from "./criateResponce.js";
 import { regist } from "./register.js";
+import {users_data_operation} from "./hist_action.js"
 
 
 class MyServer extends Server {
-  async api(path, req) {
+  api(path, req) {
     if(path=="/api/login"){
       //ログイン用API
       //call:("api/login",{ID,pass}),return:{name,session}
@@ -19,14 +20,15 @@ class MyServer extends Server {
       const index=login_check(req);
       if(!index || index=="not found") return errorResponce(index);
 
-      //console.log(res);
-      if(change_active(index)=="ok") return successRespoce(get_data(index,"all"));
+      const res=get_data(index,"all");
+
+      if(change_active(index)=="ok") return successResponce(users_data_operation(index,res));
     } else if (path=="/api/register"){
       //ユーザ登録用API
       //call:("api/register",{name,pass}),return:"ok"
       //user.jsonなし
       console.log("call register")
-      return successRespoce(regist(req));
+      return successResponce(regist(req));
     } else if (path=="/api/get_active_ID"){
       //アクティブユーザのID検索用API
       //call:("api/get_active_ID"),return:[num, ...]
@@ -39,7 +41,7 @@ class MyServer extends Server {
       //user.jsonなし
       console.log("call get_active");
       const d=get_active();
-      return successRespoce(get_ID_user(d));
+      return successResponce(get_ID_user(d));
     } else if (path=="/api/logout"){
       //ログアウト用API
       //call:("api/logout",{ID,session}),return:ok
@@ -49,7 +51,7 @@ class MyServer extends Server {
       const index=check_session(req);
       if(index=="not found"||index=="session error") return errorResponce(index);
 
-      return successRespoce(change_active(index));
+      return successResponce(change_active(index));
     } else if (path=="/api/active_friend_ID"){
       //アクティブフレンドのID取得用API
       //call:("api/get_friend",{ID,session}),return:[num, ...]
@@ -59,7 +61,7 @@ class MyServer extends Server {
       const index=check_session(req);
       if(index=="not found"||index=="session error") return errorResponce(index);
 
-      return successRespoce(active_friend(index));
+      return successResponce(active_friend(index));
     } else if (path=="/api/active_friend"){
       //アクティブフレンドのデータ取得用API
       //call:("api/get_friend",{ID,session}),return:[{ID,name,fitness}, ...]
@@ -70,7 +72,7 @@ class MyServer extends Server {
       if(index=="not found"||index=="session error") return errorResponce(index);
 
       const d=active_friend(index);
-      return successRespoce(get_ID_user(d));
+      return successResponce(get_ID_user(d));
     } else if (path=="/api/friend_data"){
       //
       //call:("api/friend_data",{ID,sesion})
@@ -81,7 +83,7 @@ class MyServer extends Server {
 
       const ids=get_data(index,"friend_ID");
 
-      return get_ID_user(ids);
+      return successResponce(get_ID_user(ids));
     } else if (path=="/api/add_friend"){
       //
       //call:("api/add_friend",{ID,session,friend_ID})
@@ -91,13 +93,22 @@ class MyServer extends Server {
       const index=check_session(req);
       if(index=="not found"||index=="session error") return errorResponce(index);
 
-      const item={
-        index:index,
-        friend_ID:req.friend_ID
-      }
-      const d=add_friend(item);
-      if(d!="ok") return errorRespoce(d);
-      return successRespoce(null);
+      friend_ID=req.friend_ID
+      const d=add_friend(index,friend_ID);
+      if(d!="ok") return errorResponce(d);
+      return successResponce(null);
+    } else if (path=="/api/get_data"){
+      //
+      //call:("api/get_data",{ID,session})
+      //user.jsonなし
+      console.log("call get_data");
+
+      const index=check_session(req);
+      if(index=="not found"||index=="session error") return errorResponce(index);
+
+      const res=get_data(index,"all");
+
+      if(change_active(index)=="ok") return successResponce(users_data_operation(index,res));
     }
   }
 }

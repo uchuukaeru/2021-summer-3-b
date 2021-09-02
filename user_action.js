@@ -3,10 +3,10 @@ import { jsonfs } from "https://js.sabae.cc/jsonfs.js";
 const userfn = "data/users.json"
 let user = jsonfs.read(userfn) || [];
 
-export function get_data(d,item){
+export function get_data(d,key){
     console.log("call function get_data");
     user = jsonfs.read(userfn) || [];
-    if(item!="all") return user[d][item];
+    if(key!="all") return user[d][key];
     return user[d];
 }
 
@@ -18,12 +18,10 @@ export function change_active(d){
     return "ok";
 }
 
-export function add_friend(item){
+export function add_friend(index,friend_ID){
     console.log("call function add_friend");
     user = jsonfs.read(userfn) || [];
-    index=item.index;
-    ID=item.ID;
-    friend_ID=item.friend_ID;
+    const ID=user[index].ID;
 
     if(!check_user(friend_ID)) return "not found";
     if(!check_me(ID,friend_ID)) return "can not add yourself";
@@ -36,11 +34,12 @@ export function add_friend(item){
 
 function check_user(reqID){
     console.log("call function check_user");
-    let active_user=[];
+    let users_ID=[];
     user = jsonfs.read(userfn) || [];
     for(const d of user){
-        if(d.is_active) active_user.push(d.ID);
+        users_ID.push(d.ID);
     }
+    if(!users_ID.includes(reqID)) return false;
     return true;
 }
 

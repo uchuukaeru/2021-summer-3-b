@@ -34,11 +34,11 @@ export function get_ID_user(list){
     return data;
 }
 
-export function active_friend(loc){
+export function active_friend(index){
     //フレンドリストとアクティブユーザリストを比較してアクティブフレンドのリストを返す
     console.log("call function active_friend");
     user = jsonfs.read(userfn) || [];
-    const friend=user[loc].friend_ID;
+    const friend=user[index].friend_ID;
     const active=get_active();
     //console.log(user[u]);
     console.log(friend);

@@ -6,7 +6,7 @@ function criateResponce(type,message){
     };
 }
 
-export function successRespoce(message){
+export function successResponce(message){
     return criateResponce("success",message);
 }
 

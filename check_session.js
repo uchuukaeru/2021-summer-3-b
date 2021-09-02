@@ -5,6 +5,12 @@ let user = jsonfs.read(userfn) || [];
 
 export function check_session(item){
     //セッションをチェックして、そのセッションを持つユーザの番地を返す
+    /*
+        item={
+            ID:
+            session:
+        }
+    */
     console.log("call function check_session")
     user = jsonfs.read(userfn) || [];
     console.log("id :",item.ID);
@@ -21,6 +27,12 @@ export function check_session(item){
 
 export function login_check(item){
     //ユーザIDでusers.jsonを検索し、パスワードが同じで有れば、番地を返す
+    /*
+        item={
+            ID:
+            pass:
+        }
+    */
     console.log("call function login_check");
     user = jsonfs.read(userfn) || [];
     console.log("id :",item.ID);
