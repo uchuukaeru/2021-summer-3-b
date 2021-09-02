@@ -326,5 +326,26 @@
       9,
       55
     ]
+  },
+  {
+    "ID": 32,
+    "name": "さんぷる",
+    "pass": "af2bdbe1aa9b6ec1e2ade1d694f41fc71a831d0268e9891562113d8a62add1bf",
+    "session": 0.5046159587245513,
+    "is_active": false,
+    "friend_ID": []
+  },
+  {
+    "ID": 33,
+    "name": "a",
+    "pass": "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb",
+    "session": 0.10270728940278229,
+    "is_active": true,
+    "friend_ID": [
+      1,
+      2,
+      3,
+      4
+    ]
   }
 ]

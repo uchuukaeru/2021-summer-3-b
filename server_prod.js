@@ -9,6 +9,7 @@ import {
 import { check_session, login_check } from "./backend/check_session.js";
 import { get_data, change_active, add_friend } from "./backend/user_action.js";
 import { successRespoce, errorResponce } from "./backend/criateResponce.js";
+import { regist } from "./backend/register.js";
 
 const userfn = "./backend/data/users.json";
 let user = jsonfs.read(userfn) || [];
