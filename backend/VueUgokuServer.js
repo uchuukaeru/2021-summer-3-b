@@ -3,8 +3,8 @@ import { CONTENT_TYPE } from "https://js.sabae.cc/CONTENT_TYPE.js";
 
 class VueUgokuServer extends Server {
   constructor(port, staticPath) {
-    super(port)
-    this.staticPath = staticPath
+    super(port);
+    this.staticPath = staticPath;
   }
   async handleWeb(req) {
     // super.handleWeb(req);
@@ -23,26 +23,30 @@ class VueUgokuServer extends Server {
       };
 
       const getIgnoredStaticPath = (path, ignores) => {
-        return path === "/"
-          || path.indexOf("..") >= 0
-          || (!ignores.includes(path.split("/")[1]))
-          ? "/index.html" : path;
-      }
+        return path === "/" ||
+          path.indexOf("..") >= 0 ||
+          !ignores.includes(path.split("/")[1])
+          ? "/index.html"
+          : path;
+      };
 
       const getStaticDir = async (staticpath) => {
-        let dirs = []
-        for await (const { name } of Deno.readDir(staticpath)) dirs.push(name)
-        return dirs
-      }
+        let dirs = [];
+        for await (const { name } of Deno.readDir(staticpath)) dirs.push(name);
+        return dirs;
+      };
 
-      const withoutDir = await getStaticDir(this.staticPath)
+      const withoutDir = await getStaticDir(this.staticPath);
 
       let range = getRange(req);
-      const fn = getIgnoredStaticPath(path, withoutDir)
+      const fn = getIgnoredStaticPath(path, withoutDir);
       const n = fn.lastIndexOf(".");
       const ext = n < 0 ? "html" : fn.substring(n + 1);
 
-      const [data, totallen, gzip] = await readFileRange(this.staticPath + fn, range);
+      const [data, totallen, gzip] = await readFileRange(
+        this.staticPath + fn,
+        range
+      );
       if (!range) {
         if (data.length != totallen) {
           range = [0, data.length - 1];
@@ -64,8 +68,8 @@ class VueUgokuServer extends Server {
         range = null;
       }
       if (range) {
-        headers["Content-Range"] = "bytes " + range[0] + "-" + range[1] +
-          "/" + totallen;
+        headers["Content-Range"] =
+          "bytes " + range[0] + "-" + range[1] + "/" + totallen;
       }
       return new Response(data, {
         status: range ? 206 : 200,
@@ -110,8 +114,7 @@ const readFileRange = async (fn, range) => {
       data = await Deno.readFile(fn + ".gz");
       return [data, data.length, gzip];
     }
-  } catch (e) {
-  }
+  } catch (e) {}
   gzip = false;
   flen = (await Deno.stat(fn)).size;
   if (range1 >= flen) {
@@ -144,4 +147,4 @@ const readFilePartial = async (fn, offset, len) => {
   return buf;
 };
 
-export { VueUgokuServer }
+export { VueUgokuServer };
