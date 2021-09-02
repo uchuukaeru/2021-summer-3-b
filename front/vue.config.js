@@ -6,13 +6,13 @@ module.exports = {
       maxEntrypointSize: 700000,
     },
     output: {
-      filename: '[name].js',
-      chunkFilename: '[name].js'
+      filename: 'js/[name].js',
+      chunkFilename: 'js/[name].js'
     }
   },
   css: {
     extract: {
-      filename: '[name].css',
+      filename: 'css/[name].css',
       chunkFilename: '[name].css'
     },
   },
