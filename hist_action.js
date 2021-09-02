@@ -115,9 +115,9 @@ export function users_data_operation(index,item){
    console.log("call function users_data_operation");
    history = jsonfs.read(histfn) || [];
    //console.log(index);
-   console.log(history[index]);
+   //console.log(history[index]);
    item.now_fitness=history[index].now_fitness
-   console.log("users_... item:",item)
+   //console.log("users_... item:",item)
    return item;
 }
 
