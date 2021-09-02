@@ -6,7 +6,8 @@ import axios from "axios";
 
 import "@/assets/css/font.css";
 
-axios.defaults.baseURL = "http://localhost:8891";
+// axios.defaults.baseURL = "http://localhost:8891";
+axios.defaults.baseURL = "https://3b.intern.jigd.info";
 
 createApp(App)
   .use(store)
