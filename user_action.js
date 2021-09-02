@@ -3,48 +3,56 @@ import { jsonfs } from "https://js.sabae.cc/jsonfs.js";
 const userfn = "data/users.json"
 let user = jsonfs.read(userfn) || [];
 
-function get_data(d,item){
+export function get_data(d,item){
     console.log("call function get_data");
+    user = jsonfs.read(userfn) || [];
     if(item!="all") return user[d][item];
     return user[d];
 }
 
-function change_active(d){
+export function change_active(d){
     console.log("call function change_active");
+    user = jsonfs.read(userfn) || [];
     user[d].is_active=!user[d].is_active;
     jsonfs.write(userfn,user);
     return "ok";
 }
 
-function add_friend(item){
+export function add_friend(item){
     console.log("call function add_friend");
-    /*
-    item={
-        d:
-        friend_ID:
-    }
-    */
-    
-    const friend_ID = item.friend_ID
-    let message = ""
+    user = jsonfs.read(userfn) || [];
+    index=item.index;
+    ID=item.ID;
+    friend_ID=item.friend_ID;
 
-    // ID, session, friendid
-    const isMyId = (data) => String(data["ID"]) === String(item.d["ID"])
+    if(!check_user(friend_ID)) return "not found";
+    if(!check_me(ID,friend_ID)) return "can not add yourself";
+    if(!check_friend(index,friend_ID)) return "already added";
 
-    const newUser = user.map((data) => {
-        if (isMyId(data)) {
-            if (data["friend_ID"].some((e) => String(friend_ID) == String(e))) {
-                message = "error"
-            } else {
-                data["friend_ID"].push(friend_ID)
-            }
-        }
-        return data
-    })
-    if (message !== "error")  message = "ok";
-
-    jsonfs.write(userfn, newUser);
-    return message
+    user[index].friend_ID.push(friend_ID);
+    jsonfs.write(userfn,user);
+    return "ok";
 }
 
-export {get_data,change_active,add_friend};
+function check_user(reqID){
+    console.log("call function check_user");
+    let active_user=[];
+    user = jsonfs.read(userfn) || [];
+    for(const d of user){
+        if(d.is_active) active_user.push(d.ID);
+    }
+    return true;
+}
+
+function check_me(ID,reqID){
+    console.log("call function check_me");
+    if(ID==reqID) return false;
+    return true;
+}
+
+function check_friend(index,reqID){
+    console.log("call function check_friend");
+    user = jsonfs.read(userfn) || [];
+    if(user[index].friend_ID.includes(reqID)) return false;
+    return true;
+}

@@ -3,8 +3,10 @@ import { jsonfs } from "https://js.sabae.cc/jsonfs.js";
 const userfn = "data/users.json"
 let user = jsonfs.read(userfn) || [];
 
-function get_active(){
+export function get_active(){
+    //すべてのアクティブユーザのIDを返す
     console.log("call function get_active");
+    user = jsonfs.read(userfn) || [];
     let active_user=[];
       for(const d of user){
         if(d.is_active) active_user.push(d.ID);
@@ -12,8 +14,10 @@ function get_active(){
     return active_user;
 }
 
-function get_ID_user(list){
+export function get_ID_user(list){
+    //IDをもとにusers.jsonにあるユーザの情報を取得する
     console.log("call function get_ID_user");
+    user = jsonfs.read(userfn) || [];
     let data=[];
     for(const d of user){
         if(list.includes(d.ID)){
@@ -30,8 +34,10 @@ function get_ID_user(list){
     return data;
 }
 
-function active_friend(loc){
+export function active_friend(loc){
+    //フレンドリストとアクティブユーザリストを比較してアクティブフレンドのリストを返す
     console.log("call function active_friend");
+    user = jsonfs.read(userfn) || [];
     const friend=user[loc].friend_ID;
     const active=get_active();
     //console.log(user[u]);
@@ -41,5 +47,3 @@ function active_friend(loc){
     console.log("active friend :",active_friend);
     return active_friend;
 }
-
-export {get_active,get_ID_user,active_friend};

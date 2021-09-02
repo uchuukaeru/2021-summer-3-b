@@ -1,6 +1,9 @@
 # 2021-summer-3-b
 
 ## API
+すべてのAPIレスポンスはcriateResponce.jsによって、オブジェクトに変換され、返されるものとする.
+
+
 ### /api/login
 <p>
 call:("api/login",{ID,pass})<br>
@@ -8,11 +11,6 @@ return:{name,session}<br>
 <br>
 ログイン用API<br>
 引数:object<br>
-返り値:object<br><br>
-ID:ユーザのID、整数型<br>
-pass:パスワードをハッシュ化したもの、文字列型<br>
-name:ユーザ名、文字列型<br>
-session:ユーザに紐づいたセッション番号、小数型<br>
 </p>
 
 ### /api/register
@@ -22,11 +20,6 @@ return:{ID,session}<br>
 <br>
 ユーザ登録用API<br>
 引数:object<br>
-返り値:object<br><br>
-name:ユーザ名、文字列型<br>
-pass:パスワードをハッシュ化したもの、文字列型<br>
-ID:ユーザのID、整数型<br>
-session:ユーザに紐づいたセッション番号、小数型<br>
 </p>
 
 ### /api/get_active_ID
@@ -36,8 +29,6 @@ return:[num, ...]<br>
 <br>
 アクティブユーザのID検索用API<br>
 引数:なし<br>
-返り値:整数型配列<br><br>
-num:アクティブユーザのID、整数型<br>
 </p>
 
 ### /api/get_active
@@ -47,11 +38,6 @@ return:[{ID,name,is_active,fitness}, ...]
 <br>
 アクティブユーザのデータ検索用API<br>
 引数:なし<br>
-返り値:object<br><br>
-ID:アクティブユーザのID、整数型<br>
-name:アクティブユーザの名前、文字列型<br>
-is_active:対象のアクティブ状態(常にtrue),bool型<br>
-fitness:運動の種類、文字列型配列<br>
 </p>
   
 ### /api/logout
@@ -61,9 +47,6 @@ return:"ok"<br>
 <br>
 ログアウト用API<br>
 引数:object<br>
-返り値:文字列型<br><br>
-ID:ユーザのID、整数型<br>
-session:ユーザに紐づいたセッション番号、小数型<br>
 </p>
 
 ### /api/active_friend_ID
@@ -73,8 +56,6 @@ return:[num, ...]<br>
 <br>
 アクティブフレンドのID検索用API<br>
 引数:object<br>
-返り値:整数型配列<br><br>
-num:アクティブフレンドのID、整数型<br>
 </p>
 
 ### /api/active_friend
@@ -84,11 +65,6 @@ return:[{ID,name,is_active,fitness}, ...]
 <br>
 アクティブフレンドのデータ検索用API<br>
 引数:object<br>
-返り値:object<br><br>
-ID:アクティブフレンドのID、整数型<br>
-name:アクティブフレンドの名前、文字列型<br>
-is_active:対象のアクティブ状態(常にtrue),bool型<br>
-fitness:運動の種類、文字列型配列<br>
 </p>
 
 ### /api/friend_data
@@ -98,11 +74,6 @@ return:"ok"
 <br>
 フレンドユーザのデータ検索用API<br>
 引数:object<br>
-返り値:object<br><br>
-ID:フレンドのID、整数型<br>
-name:フレンドの名前、文字列型<br>
-is_active:対象のアクティブ状態,bool型<br>
-fitness:運動の種類、文字列型配列<br>
 </p>
 
 ### /api/add_friend
@@ -112,10 +83,6 @@ return:"ok"
 <br>
 フレンドユーザの追加用API<br>
 引数:object<br>
-返り値:文字列<br><br>
-ID:ユーザのID、整数型<br>
-session:ユーザに紐づいたセッション番号、小数型<br>
-friend_ID:追加するフレンドID<br>
 </p>
 
 

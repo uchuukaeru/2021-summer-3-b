@@ -1,133 +1,106 @@
 import { Server } from "https://js.sabae.cc/Server.js";
-import { jsonfs } from "https://js.sabae.cc/jsonfs.js";
-import {WsServer} from "./ws/wsServer.js";
+//import {WsServer} from "./ws/wsServer.js";
 
 import {active_friend, get_active, get_ID_user} from "./active_friend.js";
 import {check_session,login_check} from "./check_session.js";
-import {get_data,change_active, add_friend} from "./user_action.js"
+import {get_data,change_active, add_friend} from "./user_action.js";
+import {successRespoce,errorResponce} from "./criateResponce.js";
+import { regist } from "./register.js";
 
-const userfn = "data/users.json"
-let user = jsonfs.read(userfn) || [];
 
 class MyServer extends Server {
   async api(path, req) {
     if(path=="/api/login"){
       //ログイン用API
       //call:("api/login",{ID,pass}),return:{name,session}
+      //user.jsonなし
       console.log("call login");
 
-      const u=login_check(req);
-      if(!u) return u;
-      if(u=="not found") return u;
+      const index=login_check(req);
+      if(!index || index=="not found") return errorResponce(index);
 
-      const res=get_data(u,"all");
       //console.log(res);
-      if(change_active(u)=="ok") return res;
+      if(change_active(index)=="ok") return successRespoce(get_data(index,"all"));
     } else if (path=="/api/register"){
       //ユーザ登録用API
       //call:("api/register",{name,pass}),return:"ok"
-      console.log("call register");
-      let ses_array=[];
-      for(const d of user){
-        ses_array.push(d.session);
-      }
-      console.log(ses_array);
-      let ses=0;
-      while(1){
-        ses=Math.random();
-        if(!ses_array.includes(ses)) break;
-      }
-      const id=user.length+1;
-      const item={
-        ID:id,
-        name:req.name,
-        pass:req.pass,
-        session:ses,
-        is_active:true,
-        fitness:[],
-        friend_ID:[]
-      }
-      user.push(item);
-      jsonfs.write(userfn,user);
-      const res={
-        ID:id,
-        session:ses
-      }
-      return res;
+      //user.jsonなし
+      console.log("call register")
+      return successRespoce(regist(req));
     } else if (path=="/api/get_active_ID"){
       //アクティブユーザのID検索用API
       //call:("api/get_active_ID"),return:[num, ...]
       //user.jsonなし
       console.log("call get_active_ID");
-      return get_active();
+      return succesResponce(get_active());
     } else if (path=="/api/get_active"){
       //アクティブユーザのデータ検索用API
-      //call;("api/get_active"),return:[{ID,name,fitness}]
+      //call:("api/get_active"),return:[{ID,name,fitness}]
       //user.jsonなし
       console.log("call get_active");
       const d=get_active();
-      return get_ID_user(d);
+      return successRespoce(get_ID_user(d));
     } else if (path=="/api/logout"){
       //ログアウト用API
       //call:("api/logout",{ID,session}),return:ok
+      //user.jsonなし
       console.log("call logout");
 
-      const u=check_session(req);
-      if(u=="not found"||u=="session error") return "error"
+      const index=check_session(req);
+      if(index=="not found"||index=="session error") return errorResponce(index);
 
-      //console.log(res);
-      return change_active(u);
+      return successRespoce(change_active(index));
     } else if (path=="/api/active_friend_ID"){
       //アクティブフレンドのID取得用API
       //call:("api/get_friend",{ID,session}),return:[num, ...]
       //user.jsonなし
       console.log("call get_friend_ID");
 
-      const u=check_session(req);
-      if(u=="not found"||u=="session error") return "error"
+      const index=check_session(req);
+      if(index=="not found"||index=="session error") return errorResponce(index);
 
-      return active_friend(u);
+      return successRespoce(active_friend(index));
     } else if (path=="/api/active_friend"){
       //アクティブフレンドのデータ取得用API
       //call:("api/get_friend",{ID,session}),return:[{ID,name,fitness}, ...]
       //user.jsonなし
       console.log("call get_friend");
 
-      const u=check_session(req);
-      if(u=="not found"||u=="session error") return "error"
+      const index=check_session(req);
+      if(index=="not found"||index=="session error") return errorResponce(index);
 
-      const d=active_friend(u);
-      //return active_friend;
-      return get_ID_user(d);
+      const d=active_friend(index);
+      return successRespoce(get_ID_user(d));
     } else if (path=="/api/friend_data"){
       //
       //call:("api/friend_data",{ID,sesion})
-      //
+      //user.jsonなし
       console.log("call friend_data");
-      const u=check_session(req);
-      if(u=="not found"||u=="session error") return "error"
+      const index=check_session(req);
+      if(index=="not found"||index=="session error") return errorResponce(index);
 
-      const ids=get_data(d,"friend_ID");
+      const ids=get_data(index,"friend_ID");
 
       return get_ID_user(ids);
     } else if (path=="/api/add_friend"){
       //
-      //call:("api/add_friend",{ID,session,friend_ID}),return:"ok"
-      //
+      //call:("api/add_friend",{ID,session,friend_ID})
+      //user.jsonなし
       console.log("call add_friend");
 
-      const u=check_session(req);
-      if(u=="not found"||u=="session error") return "error";
+      const index=check_session(req);
+      if(index=="not found"||index=="session error") return errorResponce(index);
 
       const item={
-        d:u,
+        index:index,
         friend_ID:req.friend_ID
       }
-
-      if(add_friend(item)=="ok") return "ok";
+      const d=add_friend(item);
+      if(d!="ok") return errorRespoce(d);
+      return successRespoce(null);
     }
   }
 }
 
-new MyServer(8001);
-WsServer(8002);
+new MyServer(8891);
+//WsServer(8002);
