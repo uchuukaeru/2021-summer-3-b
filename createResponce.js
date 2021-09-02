@@ -1,4 +1,4 @@
-function criateResponce(type,message){
+function createResponce(type,message){
     return {
         type:type,
         message:message
@@ -6,9 +6,9 @@ function criateResponce(type,message){
 }
 
 export function successResponce(message){
-    return criateResponce("success",message);
+    return createResponce("success",message);
 }
 
 export function errorResponce(message){
-    return criateResponce("error",message);
+    return createResponce("error",message);
 }

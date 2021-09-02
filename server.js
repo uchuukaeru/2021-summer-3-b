@@ -4,7 +4,7 @@ import { Server } from "https://js.sabae.cc/Server.js";
 import {active_friend, get_active, get_ID_user} from "./active_friend.js";
 import {check_session,login_check} from "./check_session.js";
 import {get_data,change_active, add_friend,get_name} from "./user_action.js";
-import {successResponce,errorResponce} from "./criateResponce.js";
+import {successResponce,errorResponce} from "./createResponce.js";
 import { regist } from "./register.js";
 import {fitness_finish, fitness_start, get_history, users_data_operation,now_fitness} from "./hist_action.js"
 
