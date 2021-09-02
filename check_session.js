@@ -13,7 +13,7 @@ export function check_session(item){
     */
     console.log("call function check_session")
     user = jsonfs.read(userfn) || [];
-    console.log("id :",item.ID);
+    //console.log("id :",item.ID);
     for(const d in user){
         //console.log(user[d].ID);
         if(user[d].ID==item.ID){
@@ -35,7 +35,7 @@ export function login_check(item){
     */
     console.log("call function login_check");
     user = jsonfs.read(userfn) || [];
-    console.log("id :",item.ID);
+    //console.log("id :",item.ID);
     for(const d in user){
         console.log(user[d].ID);
         if(user[d].ID==item.ID){
