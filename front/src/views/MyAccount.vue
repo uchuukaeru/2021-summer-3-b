@@ -1,7 +1,9 @@
 <template>
   <div class="page-my-account">
     <div class="tabs is-left">
-      <h1 class="title">{{ user.name }}のアカウントページ</h1>
+      <h1 class="title">
+        {{ user.name }}（ID：{{ user.ID }}）のアカウントページ
+      </h1>
     </div>
     <div class="tabs is-right">
       <ul>
@@ -63,7 +65,12 @@
             <div class="content">
               本当にログアウトしますか？
               <p class="has-text-grey">
-                ログインページから再度ログインできます
+                ログインページから再度ログインできます。
+              </p>
+              <p class="has-text-grey">
+                あなたのIDは
+                <span style="color:red">{{ user.ID }}</span>
+                です。IDは次回のログインで必要です。
               </p>
               <br />
               <p>{{ currentDateTime() }}</p>
@@ -117,13 +124,27 @@ export default {
     this.user = this.$store.state.user;
     console.log("user:", this.user);
     this.getMyfriends();
+    console.log("myfriend:", this.Myfriends);
   },
   methods: {
-    logout() {
-      this.$store.commit("removeSession");
-      this.$store.commit("removeUser");
-
-      this.$router.push("/");
+    async logout() {
+      const fitformData = {
+        ID: this.user.ID,
+        session: this.user.session,
+        fitness: null,
+      };
+      await axios.post("/api/fitness", fitformData);
+      const formData = {
+        ID: this.user.ID,
+        session: this.user.session,
+      };
+      await axios.post("/api/logupt", formData).then((response) => {
+        console.log("response:", response);
+        this.$store.commit("removeSession");
+        this.$store.commit("removeUser");
+        this.$router.push("/");
+        location.reload();
+      });
     },
     showModalEdit() {
       this.showModal = !this.showModal;
@@ -192,7 +213,7 @@ export default {
           if (response.data.type == "success") {
             this.getMyfriends();
           } else {
-            if (response.data.message == "not found") {
+            if (response.data.message == "user not found") {
               toast({
                 message: "ユーザーが存在しません",
                 type: "is-danger",

@@ -3,9 +3,16 @@
     <nav class="navbar is-link">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item">
-          <span class="icon"> <i class="icon v-md-custom-icon-home3"></i> </span
-          ><strong>みんスポ！</strong></router-link
-        >
+          <span class="icon">
+            <i class="icon v-md-custom-icon-home3"></i>
+          </span>
+          <strong>みんスポ！</strong>
+        </router-link>
+        <router-link to="#" class="navbar-item">
+          <p class=" is-3 is-spaced" v-if="user.fitness">
+            現在の運動：{{ user.fitness }}
+          </p>
+        </router-link>
 
         <a
           class="navbar-burger"
@@ -27,26 +34,30 @@
       >
         <div class="navbar-start">
           <div class="navbar-item">
-            <form method="get" action="#">
-              <div class="field has-addons">
-                <div class="control">
-                  <input
-                    type="text"
-                    class="input"
-                    placeholder="ユーザー名"
-                    name="query"
-                  />
-                </div>
-
-                <div class="control">
-                  <button class="button is-warning">
-                    <span class="icon">
-                      <i class="icon v-md-custom-icon-search"></i>
-                    </span>
-                  </button>
-                </div>
+            <div class="field has-addons">
+              <div class="control">
+                <input
+                  type="text"
+                  class="input"
+                  placeholder="運動を設定"
+                  name="query"
+                  v-model="set_fitness"
+                />
               </div>
-            </form>
+
+              <button class="button is-warning" v-on:click="changeFitness">
+                <span class="icon">
+                  <i class="icon v-md-custom-icon-fire"></i>
+                </span>
+              </button>
+              <div class="control">
+                <button class="button is-success" v-on:click="finishFitness">
+                  <span class="icon">
+                    <i class="icon v-md-custom-icon-leaf"></i>
+                  </span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -94,11 +105,21 @@
 
 <script>
 import axios from "axios";
+import { toast } from "bulma-toast";
 export default {
   data() {
     return {
+      user: {
+        ID: null,
+        name: "",
+        session: null,
+        is_active: false,
+        fitness: "",
+        friend_ID: [],
+      },
       showMobileMenu: false,
       is_loading: false,
+      set_fitness: null,
     };
   },
   beforeCreate() {
@@ -111,7 +132,81 @@ export default {
     // }
   },
   mounted() {
-    // this.is_loading = this.$store.state.is_loading;
+    this.is_loading = this.$store.state.is_loading;
+    this.user = this.$store.state.user;
+  },
+  methods: {
+    async changeFitness() {
+      if (this.set_fitness) {
+        console.log(this.user);
+        const formData = {
+          ID: this.user.ID,
+          session: this.user.session,
+          fitness: null,
+        };
+        if (this.user.fitness) {
+          await axios.post("/api/fitness", formData);
+        }
+        formData.fitness = this.set_fitness;
+        await axios.post("/api/fitness", formData).then((response) => {
+          console.log("response:", response);
+          if (response.data.type == "success") {
+            this.user.fitness = this.set_fitness;
+            this.$store.commit("setUser", this.user);
+            toast({
+              message: "運動を設定しました",
+              type: "is-success",
+              dismissible: true,
+              pauseOnHover: true,
+              duration: 2000,
+              position: "bottom-right",
+            });
+          }
+        });
+        this.set_fitness = "";
+      } else {
+        toast({
+          message: "運動を記入してください",
+          type: "is-danger",
+          dismissible: true,
+          pauseOnHover: true,
+          duration: 2000,
+          position: "bottom-right",
+        });
+      }
+    },
+    async finishFitness() {
+      if (this.user.fitness) {
+        console.log(this.user);
+        const formData = {
+          ID: this.user.ID,
+          session: this.user.session,
+          fitness: null,
+        };
+        if (this.user.fitness) {
+          await axios.post("/api/fitness", formData).then((response) => {
+            toast({
+              message: "休憩します",
+              type: "is-success",
+              dismissible: true,
+              pauseOnHover: true,
+              duration: 2000,
+              position: "bottom-right",
+            });
+          });
+        }
+        this.user.fitness = "";
+      } else {
+        toast({
+          message: "すでに休憩中です",
+          type: "is-warning",
+          dismissible: true,
+          pauseOnHover: true,
+          duration: 2000,
+          position: "bottom-right",
+        });
+      }
+    },
   },
   computed: {},
 };

@@ -1,12 +1,15 @@
 import { jsonfs } from "https://js.sabae.cc/jsonfs.js";
 
+import { now_fitness } from "./hist_action.js";
+import { hash } from "https://js.sabae.cc/hash.js";
+
 const userfn = "backend/data/users.json";
 let user = jsonfs.read(userfn) || [];
 
-export function get_data(d, item) {
+export function get_data(d, key) {
   console.log("call function get_data");
   user = jsonfs.read(userfn) || [];
-  if (item != "all") return user[d][item];
+  if (key != "all") return user[d][key];
   return user[d];
 }
 
@@ -18,31 +21,33 @@ export function change_active(d) {
   return "ok";
 }
 
-export function add_friend(item) {
+export function add_friend(index, friend_ID) {
   console.log("call function add_friend");
   user = jsonfs.read(userfn) || [];
-  console.log("leave1");
-  console.log("item:", item);
-  console.log("index", item.index);
-  const index = item.index;
   const ID = user[index].ID;
-  const friend_ID = Number(item.friend_ID);
-
-  if (!check_user(friend_ID)) return "not found";
+  console.log("check:", check_user(friend_ID));
+  if (!check_user(friend_ID)) return "user not found";
   if (!check_me(ID, friend_ID)) return "can not add yourself";
   if (!check_friend(index, friend_ID)) return "already added";
 
-  user[index].friend_ID.push(friend_ID);
+  user[index].friend_ID.push(Number(friend_ID));
   jsonfs.write(userfn, user);
   return "ok";
 }
 
 function check_user(reqID) {
   console.log("call function check_user");
-  let active_user = [];
+  console.log("reqID:", reqID);
+  let users_ID = [];
   user = jsonfs.read(userfn) || [];
   for (const d of user) {
-    if (d.is_active) active_user.push(d.ID);
+    users_ID.push(d.ID);
+  }
+  console.log(users_ID);
+  if (!users_ID.includes(reqID)) {
+    console.log("users_ID:", users_ID, " reqID:", reqID);
+    console.log("check includes", users_ID.includes(reqID));
+    return false;
   }
   return true;
 }
@@ -59,6 +64,7 @@ function check_friend(index, reqID) {
   if (user[index].friend_ID.includes(reqID)) return false;
   return true;
 }
+
 export function get_name(name) {
   console.log("call function get_name");
   console.log(hash(name));

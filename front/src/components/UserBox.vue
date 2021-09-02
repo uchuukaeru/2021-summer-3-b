@@ -1,15 +1,16 @@
 <template>
-  <div class="column is-3 is-narrow">
+  <div class="column is-2 is-narrow">
     <div class="box">
       <p class="is-size-6 lineClamp title has-text-primary">
         {{ user.name }}
       </p>
-      <p v-if="user.fitness" class="is-size-6 lineClamp subtitle">
+      <p v-if="user.now_fitness" class="is-size-6 lineClamp subtitle">
         <span class="icon v-md-custom-icon-fire"></span>
-        {{ user.fitness }}
+        {{ user.now_fitness }}
       </p>
       <p v-else class="is-size-6 lineClamp subtitle">
         <span class="icon v-md-custom-icon-leaf"></span>
+        休息
       </p>
       <!-- v-bind:to="`/user/${user.id}/`" -->
     </div>
