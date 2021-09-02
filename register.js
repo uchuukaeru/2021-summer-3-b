@@ -1,6 +1,6 @@
 import { jsonfs } from "https://js.sabae.cc/jsonfs.js";
 
-import { check_session } from "./check_session.js";
+//import { check_session } from "./check_session.js";
 import {criate_history,users_data_operation} from "./hist_action.js";
 
 const userfn = "data/users.json"

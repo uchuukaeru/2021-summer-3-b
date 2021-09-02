@@ -13,10 +13,10 @@ export function get_data(d,key){
     return user[d];
 }
 
-export function change_active(d){
+export function change_active(index,bool){
     console.log("call function change_active");
     user = jsonfs.read(userfn) || [];
-    user[d].is_active=!user[d].is_active;
+    user[index].is_active=bool;
     jsonfs.write(userfn,user);
     return "ok";
 }

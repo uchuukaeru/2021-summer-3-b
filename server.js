@@ -1,5 +1,6 @@
 import { Server } from "https://js.sabae.cc/Server.js";
 //import {WsServer} from "./ws/wsServer.js";
+import { hash } from "https://js.sabae.cc/hash.js";
 
 import {active_friend, get_active, get_ID_user} from "./active_friend.js";
 import {check_session,login_check} from "./check_session.js";
@@ -22,7 +23,7 @@ class MyServer extends Server {
 
       const res=get_data(index,"all");
 
-      if(change_active(index)=="ok") return successResponce(users_data_operation(index,res));
+      if(change_active(index,true)=="ok") return successResponce(users_data_operation(index,res));
     } else if (path=="/api/register"){
       //ユーザ登録用API
       //call:("api/register",{name,pass}),return:"ok"
@@ -55,7 +56,7 @@ class MyServer extends Server {
 
       if(fitness!=null) fitness_finish(index,fitness);
 
-      return successResponce(change_active(index));
+      return successResponce(change_active(index,false));
     } else if (path=="/api/active_friend_ID"){
       //アクティブフレンドのID取得用API
       //call:("api/get_friend",{ID,session}),return:[num, ...]
@@ -97,7 +98,7 @@ class MyServer extends Server {
       const index=check_session(req);
       if(index=="not found"||index=="session error") return errorResponce(index);
 
-      const friend_ID=req.friend_ID
+      const friend_ID=Number(req.friend_ID);
       const d=add_friend(index,friend_ID);
       if(d!="ok") return errorResponce(d);
       return successResponce(null);
@@ -151,7 +152,7 @@ class MyServer extends Server {
       if(n_fitness==null && fitness==null){
         console.log("n-n");
         return successResponce(null);
-      } else if(n_fitness==fitness){
+      } else if(hash(n_fitness)==hash(fitness)){
         console.log("n=N");
       } else if(n_fitness==null && fitness!=null){
         console.log("n-!n");
