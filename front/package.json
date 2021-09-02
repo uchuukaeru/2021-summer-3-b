@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --dest ../backend/static"
+    "build": "vue-cli-service build --dest ./dist"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -13,7 +13,6 @@
     "core-js": "^3.6.5",
     "sha256": "^0.2.0",
     "vue": "^3.0.0",
-    "vue-3-socket.io": "^1.0.4",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
   },
