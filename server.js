@@ -135,4 +135,4 @@ class MyServer extends VueUgokuServer {
   }
 }
 
-new MyServer(8001, "./front/dist");
+new MyServer(8001, "./backend/static");

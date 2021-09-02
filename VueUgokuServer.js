@@ -42,7 +42,7 @@ class VueUgokuServer extends Server {
       const n = fn.lastIndexOf(".");
       const ext = n < 0 ? "html" : fn.substring(n + 1);
 
-      const [data, totallen, gzip] = await readFileRange("./front/dist" + fn, range);
+      const [data, totallen, gzip] = await readFileRange(this.staticPath + fn, range);
       if (!range) {
         if (data.length != totallen) {
           range = [0, data.length - 1];
