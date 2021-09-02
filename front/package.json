@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --dest ./dist"
+    "build": "vue-cli-service build --dest ../backend/static"
   },
   "dependencies": {
     "axios": "^0.21.1",
