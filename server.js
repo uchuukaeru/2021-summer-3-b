@@ -148,33 +148,23 @@ class MyServer extends Server {
       console.log("now_fitness :",n_fitness);
       console.log("fitness :",fitness);
 
-      //console.log("n_fit :",n_fitness);
-      //console.log("fit :",fitness);
-
       if(n_fitness==null && fitness==null){
         console.log("n-n");
         return successResponce(null);
-      }
-      else if(n_fitness==fitness){
+      } else if(n_fitness==fitness){
         console.log("n=N");
-        return successResponce(null);
-      }
-      else if(n_fitness==null && fitness!=null){
+      } else if(n_fitness==null && fitness!=null){
         console.log("n-!n");
         fitness_start(index,fitness);
-        return successResponce(null);
-      }else if(n_fitness!=null && fitness==null){
+      } else if(n_fitness!=null && fitness==null){
         console.log("!n-n");
         fitness_finish(index,fitness);
-        return successResponce(null);
-      }else if(n_fitness!=null && fitness!=null){
+      } else if(n_fitness!=null && fitness!=null){
         console.log("!n-!n");
         fitness_finish(index,n_fitness);
         fitness_start(index,fitness);
-        return successResponce(null);
       }
-
-
+      return successResponce(null);
     }
   }
 }
