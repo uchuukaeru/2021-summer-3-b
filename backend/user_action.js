@@ -59,3 +59,25 @@ function check_friend(index, reqID) {
   if (user[index].friend_ID.includes(reqID)) return false;
   return true;
 }
+export function get_name(name) {
+  console.log("call function get_name");
+  console.log(hash(name));
+  user = jsonfs.read(userfn) || [];
+  let data = [];
+  for (const d in user) {
+    console.log(hash(user[d].name));
+    if (hash(user[d].name) == hash(name)) {
+      const item = {
+        ID: user[d].ID,
+        name: user[d].name,
+        is_active: user[d].is_active,
+        now_fitness: now_fitness(d),
+      };
+      data.push(item);
+    }
+  }
+  console.log(data.length);
+  if (data.length == 0) return null;
+  //console.log(data);
+  return data;
+}

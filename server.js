@@ -7,7 +7,12 @@ import {
   get_ID_user,
 } from "./backend/active_friend.js";
 import { check_session, login_check } from "./backend/check_session.js";
-import { get_data, change_active, add_friend } from "./backend/user_action.js";
+import {
+  get_data,
+  change_active,
+  add_friend,
+  get_name,
+} from "./backend/user_action.js";
 import { successRespoce, errorResponce } from "./backend/criateResponce.js";
 import { regist } from "./backend/register.js";
 
@@ -112,6 +117,28 @@ class MyServer extends VueUgokuServer {
       const d = add_friend(item);
       if (d != "ok") return errorResponce(d);
       return successRespoce(null);
+    } else if (path == "/api/get_data") {
+      //データ再取得用API
+      //call:("api/get_data",{ID,session})
+      //user.jsonなし
+      console.log("call get_data");
+
+      const index = check_session(req);
+      if (index == "not found" || index == "session error")
+        return errorResponce(index);
+
+      const res = get_data(index, "all");
+
+      if (change_active(index) == "ok")
+        return successResponce(users_data_operation(index, res));
+    } else if (path == "/api/get_user") {
+      //ユーザ検索用API
+      //call:("api/get_data",{search})
+      //user.jsonなし
+      console.log("call get_user");
+      const res = get_name(req.search);
+      if (res == null) return errorResponce("request user is not found");
+      return successResponce(res);
     }
   }
 }
