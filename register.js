@@ -23,7 +23,7 @@ export function regist(item){
         is_active:false,
         friend_ID:[]
     }
-    user.push(item);
+    user.push(res);
     jsonfs.write(userfn,user);
     user = jsonfs.read(userfn) || [];
     return res;

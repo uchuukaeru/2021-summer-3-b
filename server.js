@@ -8,8 +8,6 @@ import {get_data,change_active, add_friend} from "./user_action.js";
 import {successRespoce,errorResponce} from "./criateResponce.js";
 import { regist } from "./register.js";
 
-const userfn = "data/users.json"
-let user = jsonfs.read(userfn) || [];
 
 class MyServer extends Server {
   async api(path, req) {
@@ -27,7 +25,7 @@ class MyServer extends Server {
     } else if (path=="/api/register"){
       //ユーザ登録用API
       //call:("api/register",{name,pass}),return:"ok"
-      //
+      //user.jsonなし
       console.log("call register")
       return successRespoce(regist(req));
     } else if (path=="/api/get_active_ID"){
@@ -38,7 +36,7 @@ class MyServer extends Server {
       return succesResponce(get_active());
     } else if (path=="/api/get_active"){
       //アクティブユーザのデータ検索用API
-      //call;("api/get_active"),return:[{ID,name,fitness}]
+      //call:("api/get_active"),return:[{ID,name,fitness}]
       //user.jsonなし
       console.log("call get_active");
       const d=get_active();
@@ -46,12 +44,12 @@ class MyServer extends Server {
     } else if (path=="/api/logout"){
       //ログアウト用API
       //call:("api/logout",{ID,session}),return:ok
+      //user.jsonなし
       console.log("call logout");
 
       const index=check_session(req);
       if(index=="not found"||index=="session error") return errorResponce(index);
 
-      //console.log(res);
       return successRespoce(change_active(index));
     } else if (path=="/api/active_friend_ID"){
       //アクティブフレンドのID取得用API
@@ -73,12 +71,11 @@ class MyServer extends Server {
       if(index=="not found"||index=="session error") return errorResponce(index);
 
       const d=active_friend(index);
-      //return active_friend;
       return successRespoce(get_ID_user(d));
     } else if (path=="/api/friend_data"){
       //
       //call:("api/friend_data",{ID,sesion})
-      //
+      //user.jsonなし
       console.log("call friend_data");
       const index=check_session(req);
       if(index=="not found"||index=="session error") return errorResponce(index);
@@ -87,6 +84,9 @@ class MyServer extends Server {
 
       return get_ID_user(ids);
     } else if (path=="/api/add_friend"){
+      //
+      //call:("api/add_friend",{ID,session,friend_ID})
+      //user.jsonなし
       console.log("call add_friend");
 
       const index=check_session(req);
