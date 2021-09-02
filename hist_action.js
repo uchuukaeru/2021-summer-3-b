@@ -57,14 +57,16 @@ function add_hist(item){
     }
     */
     console.log("call function add_hist");
+    //console.log(item);
     history = jsonfs.read(histfn) || [];
-    index=item.index;
-    hist=item.hist;
+    const index=item.index;
+    const hist=item.hist;
 
+    console.log(hist)
     const hist_res={
         date:new Date(),
         fitness:hist.fitness,
-        tag:fitnes.tag
+        tag:hist.tag
     }
 
     history[index].hist.push(hist_res);
@@ -83,7 +85,7 @@ export function fitness_start(index,fitness){
         }
     }
     add_hist(data);
-    change_now(index,hist.fitness)
+    change_now(index,fitness)
 }
 
 export function fitness_finish(index,fitness){
@@ -116,4 +118,18 @@ export function users_data_operation(index,item){
    item.now_fitness=history[index].now_fitness
    console.log("users_... item:",item)
    return item;
+}
+
+export function get_history(index,reqnum){
+    console.log("call function get_history");
+    let data=[];
+    const num=reqnum*2;
+    const hist=history[index].hist;
+
+    if(num>hist.length) return hist;
+
+    for(let d =0;d<num;d++){
+        data.push(hist.slice(-1*(d+1))[0]);
+    }
+    return data;
 }

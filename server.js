@@ -6,7 +6,7 @@ import {check_session,login_check} from "./check_session.js";
 import {get_data,change_active, add_friend,get_name} from "./user_action.js";
 import {successResponce,errorResponce} from "./criateResponce.js";
 import { regist } from "./register.js";
-import {users_data_operation} from "./hist_action.js"
+import {fitness_finish, fitness_start, get_history, users_data_operation,now_fitness} from "./hist_action.js"
 
 
 class MyServer extends Server {
@@ -50,6 +50,10 @@ class MyServer extends Server {
 
       const index=check_session(req);
       if(index=="not found"||index=="session error") return errorResponce(index);
+
+      const fitness=now_fitness(index);
+
+      if(fitness!=null) fitness_finish(index,fitness);
 
       return successResponce(change_active(index));
     } else if (path=="/api/active_friend_ID"){
@@ -117,6 +121,60 @@ class MyServer extends Server {
       const res=get_name(req.search);
       if(res==null) return errorResponce("request user is not found")
       return successResponce(res);
+    } else if (path=="/api/get_history"){
+      //データ再取得用API
+      //call:("api/get_data",{ID,session})
+      //user.jsonなし
+      console.log("call get_history");
+
+      const index=check_session(req);
+      if(index=="not found"||index=="session error") return errorResponce(index);
+
+      const data=get_history(index,4);
+
+      return successResponce(data);
+    } else if (path=="/api/fitness"){
+      //now_fitness変更用API
+      //call:("api/fitness",{ID,session,fitness}),return:ok
+      //
+      console.log("call fitness");
+
+      const index=check_session(req);
+      if(index=="not found"||index=="session error") return errorResponce(index);
+
+      const n_fitness=now_fitness(index);
+      const fitness=req.fitness;
+
+      console.log("now_fitness :",n_fitness);
+      console.log("fitness :",fitness);
+
+      //console.log("n_fit :",n_fitness);
+      //console.log("fit :",fitness);
+
+      if(n_fitness==null && fitness==null){
+        console.log("n-n");
+        return successResponce(null);
+      }
+      else if(n_fitness==fitness){
+        console.log("n=N");
+        return successResponce(null);
+      }
+      else if(n_fitness==null && fitness!=null){
+        console.log("n-!n");
+        fitness_start(index,fitness);
+        return successResponce(null);
+      }else if(n_fitness!=null && fitness==null){
+        console.log("!n-n");
+        fitness_finish(index,fitness);
+        return successResponce(null);
+      }else if(n_fitness!=null && fitness!=null){
+        console.log("!n-!n");
+        fitness_finish(index,n_fitness);
+        fitness_start(index,fitness);
+        return successResponce(null);
+      }
+
+
     }
   }
 }

@@ -15,9 +15,9 @@ export function check_session(item){
     user = jsonfs.read(userfn) || [];
     console.log("id :",item.ID);
     for(const d in user){
-        console.log(user[d].ID);
+        //console.log(user[d].ID);
         if(user[d].ID==item.ID){
-            console.log(d);
+            //console.log(d);
             if(user[d].session!=item.session)return "session error";
             return d;
         }
