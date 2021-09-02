@@ -27,7 +27,7 @@ export function add_friend(index,friend_ID){
     if(!check_me(ID,friend_ID)) return "can not add yourself";
     if(!check_friend(index,friend_ID)) return "already added";
 
-    user[index].friend_ID.push(friend_ID);
+    user[index].friend_ID.push(Number(friend_ID));
     jsonfs.write(userfn,user);
     return "ok";
 }
