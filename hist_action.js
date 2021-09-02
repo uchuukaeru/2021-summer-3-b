@@ -113,8 +113,9 @@ export function users_data_operation(index,item){
     }
     */
    console.log("call function users_data_operation");
+   history = jsonfs.read(histfn) || [];
    //console.log(index);
-   //console.log(history[index]);
+   console.log(history[index]);
    item.now_fitness=history[index].now_fitness
    console.log("users_... item:",item)
    return item;
@@ -122,6 +123,7 @@ export function users_data_operation(index,item){
 
 export function get_history(index,reqnum){
     console.log("call function get_history");
+    history = jsonfs.read(histfn) || [];
     let data=[];
     const num=reqnum*2;
     const hist=history[index].hist;

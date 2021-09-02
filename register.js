@@ -34,10 +34,12 @@ export function regist(item){
     }
 
     criate_history(id);
+    
     user.push(data);
     jsonfs.write(userfn,user);
     user = jsonfs.read(userfn) || [];
-    index=check_session(data);
-    const res=users_data_operation(data,index);
-    return res;
+
+    
+    data.now_fitness=null;
+    return data;
 }
