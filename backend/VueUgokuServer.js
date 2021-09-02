@@ -23,19 +23,19 @@ class VueUgokuServer extends Server {
       };
 
       const getIgnoredStaticPath = (path, ignores) => {
-        return path === "/" ||
-          path.indexOf("..") >= 0 ||
-          !ignores.includes(path.split("/")[1])
-          ? "/index.html"
-          : path;
-      };
+        return path === "/"
+          || path.indexOf("..") >= 0
+          || (!ignores.includes(path.split("/")[1]))
+          ? "/index.html" : path
+      }
 
       const getStaticDir = async (staticpath) => {
-        let dirs = [];
-        for await (const { name } of Deno.readDir(staticpath)) dirs.push(name);
-        return dirs;
-      };
-
+        let dirs = []
+        for await (const { name } of Deno.readDir(staticpath)) {
+          dirs.push(name)
+        }
+        return dirs
+      }
       const withoutDir = await getStaticDir(this.staticPath);
 
       let range = getRange(req);

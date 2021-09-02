@@ -380,5 +380,16 @@
       2,
       3
     ]
+  },
+  {
+    "ID": 37,
+    "name": "a",
+    "pass": "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb",
+    "session": 0.7719853865471753,
+    "is_active": true,
+    "friend_ID": [
+      1,
+      2
+    ]
   }
 ]
