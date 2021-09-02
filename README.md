@@ -89,13 +89,12 @@ return:"ok"
 ## users.json
 <p>
 {<br>
-  ID:int型<br>
-  name:String型<br>
-  pass:String型<br>
-  session:float型<br>
-  is_active:bool型<br>
-  fitness:String型配列<br>
-  friend_ID:int型配列<br>
+>ID:int型<br>
+>name:String型<br>
+>pass:String型<br>
+>session:float型<br>
+>is_active:bool型<br>
+>friend_ID:int型配列<br>
 }<br>
 </p>
 
@@ -117,14 +116,14 @@ return:"ok"
 ## users_hist.json
 <p>
 {<br>
-  ID:int型<br>
-  hist:[<br>
-    {<br>
-      date:String型<br>
-      fitness:String型<br>
-      time:String型<br>
-    }<br>
-  ]<br>
+>ID:int型<br>
+>hist:[<br>
+->{<br>
+-->date:String型<br>
+-->fitness:String型<br>
+-->time:String型<br>
+->}<br>
+>]<br>
 }<br>
 </p>
 
