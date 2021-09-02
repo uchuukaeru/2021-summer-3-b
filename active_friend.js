@@ -1,5 +1,7 @@
 import { jsonfs } from "https://js.sabae.cc/jsonfs.js";
 
+import { users_data_operation } from "./hist_action.js";
+
 const userfn = "data/users.json"
 let user = jsonfs.read(userfn) || [];
 
@@ -19,15 +21,14 @@ export function get_ID_user(list){
     console.log("call function get_ID_user");
     user = jsonfs.read(userfn) || [];
     let data=[];
-    for(const d of user){
-        if(list.includes(d.ID)){
+    for(const d in user){
+        if(list.includes(user[d].ID)){
           const item={
-            ID:d.ID,
-            name:d.name,
-            is_active:d.is_active,
-            fitness:d.fitness
+            ID:user[d].ID,
+            name:user[d].name,
+            is_active:user[d].is_active,
           }
-          data.push(item);
+          data.push(users_data_operation(d,item));
         }
     }
     //console.log(data);

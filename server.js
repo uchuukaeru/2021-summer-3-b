@@ -3,7 +3,7 @@ import { Server } from "https://js.sabae.cc/Server.js";
 
 import {active_friend, get_active, get_ID_user} from "./active_friend.js";
 import {check_session,login_check} from "./check_session.js";
-import {get_data,change_active, add_friend} from "./user_action.js";
+import {get_data,change_active, add_friend,get_name} from "./user_action.js";
 import {successResponce,errorResponce} from "./criateResponce.js";
 import { regist } from "./register.js";
 import {users_data_operation} from "./hist_action.js"
@@ -85,7 +85,7 @@ class MyServer extends Server {
 
       return successResponce(get_ID_user(ids));
     } else if (path=="/api/add_friend"){
-      //
+      //フレンド追加用API
       //call:("api/add_friend",{ID,session,friend_ID})
       //user.jsonなし
       console.log("call add_friend");
@@ -98,7 +98,7 @@ class MyServer extends Server {
       if(d!="ok") return errorResponce(d);
       return successResponce(null);
     } else if (path=="/api/get_data"){
-      //
+      //データ再取得用API
       //call:("api/get_data",{ID,session})
       //user.jsonなし
       console.log("call get_data");
@@ -109,6 +109,14 @@ class MyServer extends Server {
       const res=get_data(index,"all");
 
       if(change_active(index)=="ok") return successResponce(users_data_operation(index,res));
+    } else if (path=="/api/get_user"){
+      //ユーザ検索用API
+      //call:("api/get_data",{search})
+      //user.jsonなし
+      console.log("call get_user");
+      const res=get_name(req.search);
+      if(res==null) return errorResponce("request user is not found")
+      return successResponce(res);
     }
   }
 }

@@ -1,4 +1,3 @@
-
 function criateResponce(type,message){
     return {
         type:type,

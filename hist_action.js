@@ -4,6 +4,7 @@ const histfn = "data/users_hist.json"
 let history = jsonfs.read(histfn) || [];
 
 export function criate_history(ID){
+    //ユーザ登録時に履歴の保存先を追加する
     console.log("call function criate_history");
     const item={
         ID:ID,
@@ -15,18 +16,21 @@ export function criate_history(ID){
 }
 
 export function get_latest(index){
+    //最新の履歴を取得する
     console.log("call function get_latest");
     history = jsonfs.read(histfn) || [];
     return history[index].hist.slice(-1)[0];
 }
 
 export function now_fitness(index){
+    //now_fitnessを取り出す
     console.log("call function now_fitness");
     history = jsonfs.read(histfn) || [];
     return history[index].now_fitness;
 }
 
 function change_now(index,fitness){
+    //now_fitnessを変更する
     history = jsonfs.read(histfn) || [];
     history[index].now_fitness=fitness;
     jsonfs.write(histfn,history);
@@ -34,6 +38,7 @@ function change_now(index,fitness){
 
 //tag:["start","finish"]
 export function get_latest_tag(index){
+    //最新の履歴のtagを取得する
     console.log("call function get_latest");
     history = jsonfs.read(histfn) || [];
     console.log(history[index].hist.slice(-1)[0].tag);
@@ -41,6 +46,7 @@ export function get_latest_tag(index){
 }
 
 function add_hist(item){
+    //履歴を追加する
     /*
     item={
         index:
@@ -67,12 +73,7 @@ function add_hist(item){
 }
 
 export function fitness_start(index,fitness){
-    /*
-        item={
-            index:
-            fitness:
-        }
-    */
+    //運動開始時に履歴を追加
     console.log("call function fitness_start");
     const data={
         index:index,
@@ -86,6 +87,7 @@ export function fitness_start(index,fitness){
 }
 
 export function fitness_finish(index,fitness){
+    //運動終了時に履歴を追加
     console.log("call function fitness_finish");
     const data={
         index:index,
@@ -98,23 +100,20 @@ export function fitness_finish(index,fitness){
     change_now(index,null);
 }
 
-export function users_data_operation(index,users){
+export function users_data_operation(index,item){
+    
     /*
-    {
+    item={
         "ID":4,"name":"追加野郎a",
         "pass":"ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb",
         "session":0.15001652548641875,"is_active":true,
         "friend_ID":[]
     }
     */
-   const item={
-       ID:users.ID,
-       name:users.name,
-       pass:users.pass,
-       session:users.session,
-       is_active:users.is_active,
-       friend_ID:users.friend_ID,
-       fitness:history[index].now_fit
-   }
+   console.log("call function users_data_operation");
+   //console.log(index);
+   //console.log(history[index]);
+   item.now_fitness=history[index].now_fitness
+   console.log("users_... item:",item)
    return item;
 }

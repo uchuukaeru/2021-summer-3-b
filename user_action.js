@@ -1,5 +1,8 @@
 import { jsonfs } from "https://js.sabae.cc/jsonfs.js";
 
+import {now_fitness} from "./hist_action.js"
+import {hash} from "https://js.sabae.cc/hash.js";
+
 const userfn = "data/users.json"
 let user = jsonfs.read(userfn) || [];
 
@@ -23,7 +26,7 @@ export function add_friend(index,friend_ID){
     user = jsonfs.read(userfn) || [];
     const ID=user[index].ID;
 
-    if(!check_user(friend_ID)) return "not found";
+    if(!check_user(friend_ID)) return "user not found";
     if(!check_me(ID,friend_ID)) return "can not add yourself";
     if(!check_friend(index,friend_ID)) return "already added";
 
@@ -54,4 +57,27 @@ function check_friend(index,reqID){
     user = jsonfs.read(userfn) || [];
     if(user[index].friend_ID.includes(reqID)) return false;
     return true;
+}
+
+export function get_name(name){
+    console.log("call function get_name");
+    console.log(hash(name));
+    user = jsonfs.read(userfn) || [];
+    let data=[];
+    for(const d in user){
+        console.log(hash(user[d].name));
+        if(hash(user[d].name)==hash(name)){
+            const item={
+                ID:user[d].ID,
+                name:user[d].name,
+                is_active:user[d].is_active,
+                now_fitness:now_fitness(d)
+            }
+            data.push(item)
+        }
+    }
+    console.log(data.length);
+    if(data.length==0) return null;
+    //console.log(data);
+    return data;
 }
