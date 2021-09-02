@@ -347,5 +347,18 @@
       3,
       4
     ]
+  },
+  {
+    "ID": 34,
+    "name": "a",
+    "pass": "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb",
+    "session": 0.8973601967841998,
+    "is_active": true,
+    "friend_ID": [
+      1,
+      2,
+      3,
+      4
+    ]
   }
 ]
