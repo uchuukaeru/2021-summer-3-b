@@ -139,15 +139,19 @@ export default {
     async changeFitness() {
       if (this.set_fitness) {
         console.log(this.user);
-        const formData = {
+        const initformData = {
           ID: this.user.ID,
           session: this.user.session,
           fitness: null,
         };
         if (this.user.fitness) {
-          await axios.post("/api/fitness", formData);
+          await axios.post("/api/fitness", initformData);
         }
-        formData.fitness = this.set_fitness;
+        const formData = {
+          ID: this.user.ID,
+          session: this.user.session,
+          fitness: this.set_fitness,
+        };
         await axios.post("/api/fitness", formData).then((response) => {
           console.log("response:", response);
           if (response.data.type == "success") {

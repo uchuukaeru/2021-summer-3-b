@@ -111,6 +111,8 @@ export default {
         friend_ID: [],
       },
       Myfriends: [],
+      Myhistory: [],
+
       showModal: false,
 
       showMyFriend: true,
@@ -191,8 +193,45 @@ export default {
       this.$store.commit("setIsLoading", false);
     },
     async getMyHistory() {
-      this.showMyFriend = false;
-      this.showMyHistory = true;
+      this.$store.commit("setIsLoading", true);
+      const formData = {
+        ID: this.user.ID,
+        session: this.user.session,
+      };
+      console.log("formData:", formData);
+
+      await axios
+        .post("/api/get_history", formData)
+        .then((response) => {
+          console.log(response);
+          if (response.data.type == "success") {
+            this.Myhistory = response.data.message;
+            this.showMyFriend = false;
+            this.showMyHistory = true;
+          } else {
+            toast({
+              message: "Something went wrong. Please try again.",
+              type: "is-danger",
+              dismissible: true,
+              pauseOnHover: true,
+              duration: 2000,
+              position: "bottom-right",
+            });
+          }
+          console.log("activeuser:", this.Myfriends);
+        })
+        .catch((error) => {
+          console.log(error);
+          // toast({
+          //   message: "Something went wrong. Please try again.",
+          //   type: "is-danger",
+          //   dismissible: true,
+          //   pauseOnHover: true,
+          //   duration: 2000,
+          //   position: "bottom-right",
+          // });
+        });
+      this.$store.commit("setIsLoading", false);
     },
     async addFriend() {
       this.$store.commit("setIsLoading", true);
