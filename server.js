@@ -1,5 +1,5 @@
 import { jsonfs } from "https://js.sabae.cc/jsonfs.js";
-import { VueUgokuServer } from "./backend/VueUgokuServer.js";
+import { VueUgokuServer } from "./VueUgokuServer.js";
 import { Server } from "https://js.sabae.cc/Server.js";
 //import {WsServer} from "./ws/wsServer.js";
 
@@ -7,23 +7,23 @@ import {
   active_friend,
   get_active,
   get_ID_user,
-} from "./backend/active_friend.js";
-import { check_session, login_check } from "./backend/check_session.js";
+} from "./active_friend.js";
+import { check_session, login_check } from "./check_session.js";
 import {
   get_data,
   change_active,
   add_friend,
   get_name,
-} from "./backend/user_action.js";
-import { successResponce, errorResponce } from "./backend/criateResponce.js";
-import { regist } from "./backend/register.js";
+} from "./user_action.js";
+import { successResponce, errorResponce } from "./criateResponce.js";
+import { regist } from "./register.js";
 import {
   fitness_finish,
   fitness_start,
   get_history,
   users_data_operation,
   now_fitness,
-} from "./backend/hist_action.js";
+} from "./hist_action.js";
 
 class MyServer extends VueUgokuServer {
   api(path, req) {
@@ -195,6 +195,6 @@ class MyServer extends VueUgokuServer {
   }
 }
 
-new MyServer(8891, "./backend/static");
+new MyServer(8891);
 // new MyServer(8891);
 //WsServer(8002);
