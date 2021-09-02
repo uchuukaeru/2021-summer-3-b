@@ -52,7 +52,7 @@ export default {
     };
   },
   mounted() {
-    document.title = "Log In | Djackets";
+    document.title = "Log In | MinSpo";
   },
   methods: {
     async submitForm() {

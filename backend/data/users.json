@@ -7,22 +7,14 @@
     "is_active": false,
     "fitness": "運動",
     "friend_ID": [
-      2,
-      4,
-      5,
-      6,
       1,
+      12,
       2,
-      5,
+      3,
+      3,
       5,
       7,
-      10,
-      9,
-      1,
-      null,
-      2,
-      4,
-      6
+      10
     ]
   },
   {
@@ -244,5 +236,14 @@
       22,
       6
     ]
+  },
+  {
+    "ID": 23,
+    "name": "test10",
+    "pass": "ec2738feb2bbb0bc783eb4667903391416372ba6ed8b8dddbebbdb37e5102473",
+    "session": 0.026610373012109445,
+    "is_active": false,
+    "fitness": "",
+    "friend_ID": []
   }
 ]
