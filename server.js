@@ -1,14 +1,18 @@
 import { Server } from "https://js.sabae.cc/Server.js";
 //import {WsServer} from "./ws/wsServer.js";
-// import { VueUgokuServer } from "./VueUgokuServer.js";
+import { VueUgokuServer } from "./backend/VueUgokuServer.js";
 
-import { active_friend, get_active, get_ID_user } from "./active_friend.js";
-import { check_session, login_check } from "./check_session.js";
-import { get_data, change_active, add_friend } from "./user_action.js";
-import { successRespoce, errorResponce } from "./criateResponce.js";
-import { regist } from "./register.js";
+import {
+  active_friend,
+  get_active,
+  get_ID_user,
+} from "./backend/active_friend.js";
+import { check_session, login_check } from "./backend/check_session.js";
+import { get_data, change_active, add_friend } from "./backend/user_action.js";
+import { successRespoce, errorResponce } from "./backend/criateResponce.js";
+import { regist } from "./backend/register.js";
 
-class MyServer extends Server {
+class MyServer extends VueUgokuServer {
   async api(path, req) {
     if (path == "/api/login") {
       //ログイン用API
@@ -110,6 +114,6 @@ class MyServer extends Server {
   }
 }
 
-// new MyServer(8891, "./static");
-new MyServer(8891);
+new MyServer(8891, "./backend/static");
+// new MyServer(8891);
 //WsServer(8002);

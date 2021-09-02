@@ -58,6 +58,7 @@ export default {
       password: "",
       password2: "",
       errors: [],
+      user_id: null,
     };
   },
   methods: {
@@ -86,16 +87,35 @@ export default {
         await axios
           .post("/api/register", formData)
           .then((response) => {
-            toast({
-              message: "Account created, please log in!",
-              type: "is-success",
-              dismissible: true,
-              pauseOnHover: true,
-              duration: 2000,
-              position: "bottom-right",
-            });
+            if (response.data.type == "success") {
+              console.log(response.data);
+              this.user_id = response.data.message.ID;
 
-            this.$router.push("/log-in");
+              toast({
+                message: "アカウントが登録されました。ログインします。",
+                type: "is-success",
+                dismissible: true,
+                pauseOnHover: true,
+                duration: 2000,
+                position: "bottom-right",
+              });
+
+              const loginFormData = {
+                ID: response.data.message.ID,
+                pass: response.data.message.pass,
+              };
+              this.login(loginFormData);
+            } else {
+              toast({
+                message: "問題が発生しました。",
+                type: "is-success",
+                dismissible: true,
+                pauseOnHover: true,
+                duration: 2000,
+                position: "bottom-right",
+              });
+              return;
+            }
           })
           .catch((error) => {
             if (error.response) {
@@ -114,6 +134,58 @@ export default {
           });
       }
 
+      this.$store.commit("setIsLoading", false);
+    },
+    async login(formData) {
+      this.$store.commit("setIsLoading", true);
+      localStorage.removeItem("settion");
+      console.log("formData :", formData);
+      // console.log(this.encryptPassword(formData.pass));
+
+      await axios
+        .post("/api/login", formData)
+        .then((response) => {
+          console.log("response :", response);
+          if (response.data.type == "success") {
+            this.$store.commit("setSession", response.data.message.session);
+            localStorage.setItem("session", response.data.message.session);
+
+            this.$store.commit("setUser", response.data.message);
+            this.$router.push("/my-account");
+          } else {
+            if (!response.data.message) {
+              toast({
+                message: "パスワードが間違っています。",
+                type: "is-danger",
+                dismissible: true,
+                pauseOnHover: true,
+                duration: 2000,
+                position: "bottom-right",
+              });
+            } else {
+              toast({
+                message:
+                  "ユーザーが存在しません。ユーザー名(ID)を確認してください。",
+                type: "is-danger",
+                dismissible: true,
+                pauseOnHover: true,
+                duration: 2000,
+                position: "bottom-right",
+              });
+            }
+          }
+        })
+        .catch((error) => {
+          if (error.response) {
+            for (const property in error.response.data) {
+              this.errors.push(`${property}: ${error.response.data[property]}`);
+            }
+          } else {
+            this.errors.push("Something went wrong. Please try again");
+
+            console.log(JSON.stringify(error));
+          }
+        });
       this.$store.commit("setIsLoading", false);
     },
   },

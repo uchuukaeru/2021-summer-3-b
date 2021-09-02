@@ -32,7 +32,7 @@
             <input
               type="text"
               class="input"
-              placeholder="ユーザーID"
+              placeholder="ユーザーID 追加"
               name="query"
               v-model="add_friend_ID"
             />
@@ -84,6 +84,8 @@
 <script>
 import axios from "axios";
 
+import { toast } from "bulma-toast";
+
 import UserBox from "@/components/UserBox.vue";
 
 export default {
@@ -113,7 +115,7 @@ export default {
   mounted() {
     document.title = "My account | MinSpo!!";
     this.user = this.$store.state.user;
-    console.log(this.user);
+    console.log("user:", this.user);
     this.getMyfriends();
   },
   methods: {
@@ -137,11 +139,20 @@ export default {
       await axios
         .post("/api/friend_data", formData)
         .then((response) => {
-          console.log(response.data);
-          if (response.data != "error") {
-            this.Myfriends = response.data;
+          console.log(response);
+          if (response.data.type == "success") {
+            this.Myfriends = response.data.message;
             this.showMyHistory = false;
             this.showMyFriend = true;
+          } else {
+            toast({
+              message: "Something went wrong. Please try again.",
+              type: "is-danger",
+              dismissible: true,
+              pauseOnHover: true,
+              duration: 2000,
+              position: "bottom-right",
+            });
           }
           console.log("activeuser:", this.Myfriends);
         })
@@ -176,7 +187,42 @@ export default {
         .post("/api/add_friend", formData)
         .then((response) => {
           console.log(response.data);
-          this.getMyfriends();
+
+          this.add_friend_ID = null;
+          if (response.data.type == "success") {
+            this.getMyfriends();
+          } else {
+            if (response.data.message == "not found") {
+              toast({
+                message: "入力したIDのユーザーが存在しません。",
+                type: "is-danger",
+                dismissible: true,
+                pauseOnHover: true,
+                duration: 2000,
+                position: "bottom-right",
+              });
+            } else if (response.data.message == "can not add yourself") {
+              toast({
+                message: "入力したIDはあなたのIDです。",
+                type: "is-danger",
+                dismissible: true,
+                pauseOnHover: true,
+                duration: 2000,
+                position: "bottom-right",
+              });
+            } else if (response.data.message == "already added") {
+              toast({
+                message: "入力したIDのユーザーを既に登録しています",
+                type: "is-danger",
+                dismissible: true,
+                pauseOnHover: true,
+                duration: 2000,
+                position: "bottom-right",
+              });
+            } else {
+              console.log("some warning");
+            }
+          }
         })
         .catch((error) => {
           if (error.response) {

@@ -24,6 +24,7 @@
 <script>
 import axios from "axios";
 // @ is an alias to /src
+import { toast } from "bulma-toast";
 
 import UserBox from "@/components/UserBox";
 export default {
@@ -58,19 +59,30 @@ export default {
         .get("api/get_active")
         .then((response) => {
           console.log(response.data);
-          this.activeUsers = response.data;
-          console.log("activeuser:", this.activeUsers);
+          if (response.data.type == "success") {
+            this.activeUsers = response.data.message;
+            console.log("activeuser:", this.activeUsers);
+          } else {
+            toast({
+              message: "Something went wrong. Please try again.",
+              type: "is-danger",
+              dismissible: true,
+              pauseOnHover: true,
+              duration: 2000,
+              position: "bottom-right",
+            });
+          }
         })
         .catch((error) => {
           console.log(error);
-          // toast({
-          //   message: "Something went wrong. Please try again.",
-          //   type: "is-danger",
-          //   dismissible: true,
-          //   pauseOnHover: true,
-          //   duration: 2000,
-          //   position: "bottom-right",
-          // });
+          toast({
+            message: "Something went wrong. Please try again.",
+            type: "is-danger",
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 2000,
+            position: "bottom-right",
+          });
         });
       this.$store.commit("setIsLoading", false);
     },

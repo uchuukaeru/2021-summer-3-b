@@ -6,7 +6,7 @@ import axios from "axios";
 
 import "@/assets/css/font.css";
 
-axios.defaults.baseURL = "http://localhost:8001";
+axios.defaults.baseURL = "http://localhost:8891";
 
 createApp(App)
   .use(store)

@@ -69,37 +69,33 @@ export default {
         .post("/api/login", formData)
         .then((response) => {
           console.log("response :", response);
-          if (response.data == "not found") {
-            toast({
-              message:
-                "ユーザーが存在しません。ユーザー名(ID)を確認してください。",
-              type: "is-danger",
-              dismissible: true,
-              pauseOnHover: true,
-              duration: 2000,
-              position: "bottom-right",
-            });
-          } else if (response.data) {
-            console.log(response.data);
-            const session = response.data.session;
-            this.$store.commit("setSession", session);
-            localStorage.setItem("session", session);
+          if (response.data.type == "success") {
+            this.$store.commit("setSession", response.data.message.session);
+            localStorage.setItem("session", response.data.message.session);
 
-            this.$store.commit("setUser", response.data);
-
-            // user =
-            // console.log("user:", this.user);
-
+            this.$store.commit("setUser", response.data.message);
             this.$router.push("/my-account");
           } else {
-            toast({
-              message: "パスワードが間違っています。",
-              type: "is-danger",
-              dismissible: true,
-              pauseOnHover: true,
-              duration: 2000,
-              position: "bottom-right",
-            });
+            if (!response.data.message) {
+              toast({
+                message: "パスワードが間違っています。",
+                type: "is-danger",
+                dismissible: true,
+                pauseOnHover: true,
+                duration: 2000,
+                position: "bottom-right",
+              });
+            } else {
+              toast({
+                message:
+                  "ユーザーが存在しません。ユーザー名(ID)を確認してください。",
+                type: "is-danger",
+                dismissible: true,
+                pauseOnHover: true,
+                duration: 2000,
+                position: "bottom-right",
+              });
+            }
           }
         })
         .catch((error) => {
