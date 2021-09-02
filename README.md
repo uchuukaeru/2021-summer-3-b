@@ -146,6 +146,32 @@ error一覧<br>
 >request user is not found　検索でリクエストされたユーザが存在しない<br>
 </p>
 
+### /api/get_history
+<p>
+call:("api/get_history",{ID,sesson})<br>
+return:[{date,fitness,tag}, ...]<br>
+<br>
+履歴取得用API<br>
+引数:object<br>
+<br>
+error一覧<br>
+>session error　セッションが間違っている<br>
+>not found　リクエストされたユーザが存在しない<br>
+</p>
+
+### /api/fitness
+<p>
+call:("api/get_user",{ID,session,fitness})<br>
+return:ok<br>
+<br>
+運動変更用API<br>
+引数:object<br>
+<br>
+error一覧<br>
+>session error　セッションが間違っている<br>
+>not found　リクエストされたユーザが存在しない<br>
+</p>
+
 ## users.json
 <p>
 {<br>
